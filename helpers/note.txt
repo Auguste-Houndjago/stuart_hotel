@@ -1,0 +1,711 @@
+
+              <div className="grid grid-cols-2 gap-4 mt-2" >
+                <FormField
+                  control={form.control}
+                  name="gym"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 border p-4">
+
+
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+
+                      </FormControl>
+                      <FormLabel> 24hrs Rooms Services</FormLabel>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+
+
+                />
+              </div>
+
+
+
+//prismadb.ts 
+
+import { PrismaClient } from "@prisma/client";
+
+
+
+
+declare global {
+    var prisma : PrismaClient | undefined 
+
+}
+const prismadb = globalThis.prisma || new PrismaClient();
+
+
+if (process.env.NODE_ENV !== "production") globalThis.prisma = prismadb; 
+
+
+
+export default prismadb ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Création de la base de données
+CREATE DATABASE IF NOT EXISTS gestion_des_eleves
+  DEFAULT CHARACTER SET utf8mb4
+  DEFAULT COLLATE utf8mb4_unicode_ci;
+ 
+USE gestion_des_eleves;
+
+-- Création de la table eleves
+CREATE TABLE IF NOT EXISTS eleves (
+  numE INT NOT NULL AUTO_INCREMENT,
+  codeC INT NULL,
+  nomE VARCHAR(45) NULL,
+  prenomE VARCHAR(45) NULL,
+  datenaiss DATE NULL,
+  adE VARCHAR(45) NULL,
+  tel INT NULL,
+  email VARCHAR(45) NULL,
+  PRIMARY KEY (numE)
+) ENGINE=InnoDB;
+
+-- Création de la table classe
+CREATE TABLE IF NOT EXISTS classe (
+  codeC INT NOT NULL AUTO_INCREMENT,
+  libelleC VARCHAR(45) NULL,
+  nbplace INT NULL,
+  etage VARCHAR(45) NULL,
+  numE INT NULL,
+  PRIMARY KEY (codeC),
+  FOREIGN KEY (numE) REFERENCES eleves(numE)
+) ENGINE=InnoDB;
+
+-- Création de la table professeur
+CREATE TABLE IF NOT EXISTS professeur (
+  numP INT NOT NULL AUTO_INCREMENT,
+  nomP VARCHAR(45) NULL,
+  prenomP VARCHAR(45) NULL,
+  datenessP DATE NULL,
+  adP VARCHAR(45) NULL,
+  diplome VARCHAR(45) NULL,
+  ancientee INT NULL,
+  matiere VARCHAR(45) NULL,
+  PRIMARY KEY (numP)
+) ENGINE=InnoDB;
+
+-- Création de la table enseignement
+CREATE TABLE IF NOT EXISTS enseignement (
+  numP INT NOT NULL,
+  numE INT NOT NULL,
+  FOREIGN KEY (numP) REFERENCES professeur(numP),
+  FOREIGN KEY (numE) REFERENCES eleves(numE),
+  PRIMARY KEY (numP, numE)
+) ENGINE=InnoDB;
+
+-- Insertion de données dans la table eleves
+INSERT INTO eleves (codeC, nomE, prenomE, datenaiss, adE, tel, email) 
+VALUES 
+(1, 'White', 'Walter', '1970-09-07', '308 Negra Arroyo Lane', 123456789, 'walter.white@example.com'),
+(2, 'White', 'Skyler', '1970-08-11', '308 Negra Arroyo Lane', 987654321, 'skyler.white@example.com'),
+(1, 'Pinkman', 'Jesse', '1984-09-24', '9809 Margo Street', 111222333, 'jesse.pinkman@example.com'),
+(3, 'Schrader', 'Hank', '1968-04-04', '6353 Juan Tabo Boulevard', 444555666, 'hank.schrader@example.com'),
+(2, 'Fring', 'Gustavo', '1957-12-31', '12016 Juan Tabo Boulevard', 777888999, 'gus.fring@example.com');
+
+-- Insertion de données dans la table classe
+INSERT INTO classe (libelleC, nbplace, etage, numE) 
+VALUES 
+('Informatique', 25, 'Rez-de-chaussée', 1),
+('Médecine', 30, '1er étage', 2),
+('Droit', 28, '2ème étage', 3),
+('Économie', 25, '3ème étage', 4),
+('Ingénierie', 30, '4ème étage', 5);
+
+-- Insertion de données dans la table professeur
+INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplome, ancientee, matiere) 
+VALUES 
+('Lannister', 'Tyrion', '1978-01-01', 'Casterly Rock', 'Master of Coin', 20, 'Stratégie et Politique'),
+('Lannister', 'Cersei', '1975-03-18', 'King\'s Landing', 'Queen Regent', 15, 'Histoire de Westeros'),
+('Snow', 'Jon', '1986-12-23', 'Winterfell', 'King in the North', 10, 'Combat et Stratégie'),
+('Targaryen', 'Daenerys', '1986-10-23', 'Dragonstone', 'Breaker of Chains', 8, 'Langues Anciennes'),
+('Stark', 'Sansa', '1992-06-12', 'Winterfell', 'Lady of Winterfell', 5, 'Diplomatie');
+
+-- Insertion de données dans la table enseignement
+INSERT INTO enseignement (numP, numE) 
+VALUES 
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);
+
+
+icon 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind css Responsive Navbar - Sagar Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="bg-blue-500">
+    <nav class="p-5 bg-white shadow md:flex md:items-center md:justify-between">
+        <div class="flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-[Popp] cursor-pointer">
+                <img src="/logo.png" class="h-10 inline" alt="">CodePrism
+            </a>
+            <span class="text-3xl cursor-pointer md:hidden mx-2 block">
+                <ion-icon name="menu" onclick="Menu(this)"></ion-icon>
+            </span>
+        </div>
+        <ul class="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-0 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-red-500 duration-500">Home</a>
+            </li>
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-red-500 duration-500">About</a>
+            </li>
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-red-500 duration-500">Service</a>
+            </li>
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-red-500 duration-500">Blog</a>
+            </li>
+            <li class="mx-4 my-6 md:my-0">
+                <a href="#" class="text-xl hover:text-red-500 duration-500">Contact</a>
+            </li>
+            <button class="px-6 py-2 mx-4 bg-red-500 text-white font-[Poppins] rounded hover:bg-red-400">Get
+                Start</button>
+        </ul>
+    </nav>
+    <script>
+        function Menu(e) {
+            let list = document.querySelector('ul');
+            e.name === 'menu' ? (e.name = "close", list.classList.add('top-[80px]'), list.classList.add('opacity-100')) : (e.name = "menu", list.classList.remove('top-[80px]'), list.classList.remove('opacity-100'))
+        }
+    </script>
+</body>
+
+</html>
+        
+
+
+        Blog
+
+
+        index html
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Blog Post </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Post</h2>
+        <div class="blog-post">
+            <div class="blog-post_img">
+                <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTU3fHx0ZWNobm9sb2d5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    alt="">
+            </div>
+            <div class="blog-post_info">
+                <div class="blog-post_date">
+                    <span>Sagar Developer</span>
+                    <span>Nov 12 2021</span>
+                </div>
+                <h1 class="blog-post_title">Lorem ipsum dolor sit amet.</h1>
+                <p class="blog-post_text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores a, tempore veniam quasi sint fugiat
+                    facilis, facere, amet magnam optio velit. Laudantium et temporibus soluta, esse cupiditate aliquid
+                    dicta
+                    accusantium.
+                </p>
+                <a href="#" class="blog-post_cta">Read More</a>
+            </div>
+        </div>
+
+        <div class="blog-post">
+            <div class="blog-post_img">
+                <img src="https://images.unsplash.com/photo-1562813733-b31f71025d54?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y29kaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    alt="">
+            </div>
+            <div class="blog-post_info">
+                <div class="blog-post_date">
+                    <span>Sagar Developer</span>
+                    <span>Dec 25 2021</span>
+                </div>
+                <h1 class="blog-post_title">Lorem ipsum dolor sit amet.</h1>
+                <p class="blog-post_text">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores a, tempore veniam quasi sint fugiat
+                    facilis, facere, amet magnam optio velit. Laudantium et temporibus soluta, esse cupiditate aliquid
+                    dicta
+                    accusantium.
+                </p>
+                <a href="#" class="blog-post_cta">Read More</a>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+        
+        css
+
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    font-size: 10px;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    padding: 0 1.5rem;
+}
+
+.container {
+    margin-top: 150px;
+}
+
+.container h2 {
+    letter-spacing: 1px;
+    font-size: 50px;
+    color: #6968aa;
+    border: 2px dashed #0181a0;
+    padding: 10px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 90px;
+    margin-left: 375px;
+}
+
+.blog-post {
+    width: 100%;
+    max-width: 98rem;
+    padding: 5rem;
+    background-color: #dbf4ff21;
+    box-shadow: 0 1.4rem 8rem rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    border-radius: .8rem;
+    margin: 10px;
+}
+
+.blog-post_img {
+    min-width: 35rem;
+    max-width: 35rem;
+    height: 30rem;
+    transform: translateX(-8rem);
+    position: relative;
+}
+
+.blog-post_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: .8rem;
+    display: block;
+}
+
+.blog-post_img img::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: .5rem .5rem 3rem 1px rgba(0, 0, 0, 0.5);
+    border-radius: .8rem;
+}
+
+.blog-post_date span {
+    display: block;
+    color: #00000080;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: .5rem 0;
+}
+
+.blog-post_title {
+    font-size: 2.5rem;
+    margin: 1.5rem 0 2rem;
+    text-transform: uppercase;
+    color: #4facfe;
+}
+
+.blog-post_text {
+    margin-bottom: 3rem;
+    font-size: 1.4rem;
+    color: #000000b3;
+}
+
+.blog-post_cta {
+    display: inline-block;
+    padding: 1.5rem 3rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    color: #fff;
+    text-decoration: none;
+    border-radius: .8rem;
+    background: linear-gradient(to right, #c945cf 0%, #04a6bd 100%);
+}
+
+.blog-post_cta:hover {
+    background: linear-gradient(to right, #04a6bd 0%, #c945cf 100%);
+}
+
+@media screen and (max-width: 1068px) {
+    .blog-post {
+        max-width: 80rem;
+    }
+    .blog-post_img {
+        min-width: 30rem;
+        max-width: 30rem;
+    }
+    .container h2 {
+        margin-top: 120px;
+        margin-left: 275px;
+    }
+}
+
+@media screen and (max-width: 868px) {
+    .blog-post {
+        max-width: 70rem;
+    }
+    .container h2 {
+        margin-top: 20px;
+        margin-left: 142px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .blog-post {
+        padding: 2.5rem;
+        flex-direction: column;
+    }
+    .blog-post_img {
+        min-width: 100%;
+        max-width: 100%;
+        transform: translate(0, -1rem);
+    }
+    .container {
+        margin-top: auto;
+    }
+}
+
+@media screen and (max-width: 823px) {
+    .container h2 {
+        margin-top: 35px;
+        margin-left: 142px;
+    }
+}
+        
+
+        
+Comptabilité, Contrôle et Audit (CCA)
+Informatique Réseaux, et Télécommunication (IRT)
+Management International (MI)
+Gestion de Projets. (GP)
+Transport Logistique (TL)
+
+
+
+-- Enregistrements pour la table 'filiere'
+  INSERT INTO filiere (nomF, dateOU) VALUES ('Comptabilité, Contrôle et Audit (CCA)', '2022-09-01');
+  INSERT INTO filiere (nomF, dateOU) VALUES ('Informatique Réseaux, et Télécommunication (IRT)', '2022-09-01');
+  INSERT INTO filiere (nomF, dateOU) VALUES ('Management International (MI)', '2022-09-01');
+  INSERT INTO filiere (nomF, dateOU) VALUES ('Gestion de Projets (GP)', '2022-09-01');
+  INSERT INTO filiere (nomF, dateOU) VALUES ('Transport Logistique (TL)', '2022-09-01');
+
+-- Enregistrements pour la table 'matiere'
+INSERT INTO matiere (NomM) VALUES ('Comptabilité Générale');
+INSERT INTO matiere (NomM) VALUES ('Contrôle de Gestion');
+INSERT INTO matiere (NomM) VALUES ('Audit Financier');
+INSERT INTO matiere (NomM) VALUES ('Réseaux Informatiques');
+INSERT INTO matiere (NomM) VALUES ('Télécommunication Numérique');
+INSERT INTO matiere (NomM) VALUES ('Stratégie Internationale');
+INSERT INTO matiere (NomM) VALUES ('Management Interculturel');
+INSERT INTO matiere (NomM) VALUES ('Gestion de Projet');
+INSERT INTO matiere (NomM) VALUES ('Logistique');
+INSERT INTO matiere (NomM) VALUES ('Transport Maritime');
+
+-- Enregistrements pour la table 'professeur'
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Roger', 'Jean', '1970-08-20', 'Atapkame ', 'Comptabilité', 10, 'Comptabilité Générale');
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Alfred', 'Marie', '1975-03-12', 'Atapkame ', 'Contrôle de Gestion', 15, 'Contrôle de Gestion');
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Girard', 'Sophie', '1980-11-05', 'Atapkame ', 'Audit', 10, 'Audit Financier');
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Martin', 'Pierre', '1968-06-30', 'Lome-Agoe ', 'Informatique', 10, 'Réseaux Informatiques');
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Komlan', 'Julie', '1973-09-15', 'Atapkame ', 'Télécommunication', 20, 'Télécommunication Numérique');
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Morice', 'Paul', '1973-09-15', 'Atapkame ', 'Management', 5, 'Stratégie Internationale');
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Sossou', 'Anne', '1973-09-15', 'Lome-Agoe ', 'Gestion de Projet', 5, 'Gestion de Projet');
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Robert', 'Louis', '1973-09-15', 'Lome-Agoe', 'Logistique', 10, 'Logistique');
+  INSERT INTO professeur (nomP, prenomP, datenessP, adP, diplomeP, ancientee, matiere) VALUES ('Marck', 'Marc', '1973-09-15', 'Lome-Agoe', 'Transport', 5, 'Transport Maritime');
+P
+-- Enregistrements pour la table 'etudiant'
+INSERT INTO etudiant (nomE, prenomE, sexE, NationaliterE, codeF) VALUES ('Salim', 'Julien', 'Homme', 'Togolaise', 1);
+INSERT INTO etudiant (nomE, prenomE, sexE, NationaliterE, codeF) VALUES ('Lam', 'jules', 'Homme', 'Marocainne', 2);
+INSERT INTO etudiant (nomE, prenomE, sexE, NationaliterE, codeF) VALUES ('Garcia', 'Sophie', 'Femme', 'Togolaise', 3);
+INSERT INTO etudiant (nomE, prenomE, sexE, NationaliterE, codeF) VALUES ('Roger', 'Ali', 'Homme', 'Togolaise', 4);
+INSERT INTO etudiant (nomE, prenomE, sexE, NationaliterE, codeF) VALUES ('Jhoson', 'Linh', 'Femme', 'Ivoirienne', 5);
+
+
+arboressence materiel 
+
+
+
+
+Realiteme1!super
+
+host : panel.000webhost.com
+
+db name : id22037143_hotel
+
+user : id22037143_stuart
+
+password : Realiteme1!
+
+port : 3036
+
+<?php
+$servername = "localhost";
+$username = "id22037143_stuart";
+$password = "Realiteme1!";
+$dbname = "id22037143_hotel";
+
+try {
+  $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+  // définir le mode d'erreur PDO sur exception
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  echo "Connected successfully"; 
+} catch(PDOException $e) {
+  echo "Connection failed: " . $e->getMessage();
+}
+?>
+
+wi-lan 
+
+un domaine de diffusion : chacun emet comme il veux 
+
+
+
+// reseaux 
+
+    un block CIDR est un enssemble d'adresse IP qui partage le meme prefixe reseaux et le meme nombre de bits 
+
+
+tableau de classe d'adresse IP 
+
+A   0  1-126    255.0.0.0 
+B   10 128-191  255.255.255.0.0
+C   110 192-223   255.0.0.0
+D   111 240-255  aucun
+E   1111
+qst                                 aucun
+
+qulles st les usages reserver au classe d et e
+
+qst : 
+
+N= 2^n -2
+n = Nbre de sous RX
+
+n= log2(N)=ln(N)/ln2 
+            =ln(2000)/ln2
+            ~= 11
+
+N=2^11 -2   =2046 Machines
+
+
+192 168 200 .5 /30 
+conversion en binaire 
+
+11000000 10101000 11001000 00000101 /
+1111111111111111111111111111111 100
+
+1100000 10101000 11001000 0000100
+
+=> 192.168.200.4
+                .6               0100
+
+192.168.200.9 /30
+
+
+        Pr compresseser une adrrese ipV6 
+
+        on applique les regles suivantes :
+    -eliminer dans un hextet (16 bits) tout les 0 se trouvant a gauche
+    -remplacer dans une sequence continue de 0 par :
+
+exemple : 
+
+    2001:0001:0002:014E:ABC:0123:036A:: 243B
+
+
+    determiner la classe (A,B,C,D) sur la base du 1er octect
+
+    diviser mentalement les octects du reseaux et de l'hote en fonction de la classe
+
+    pour trouver l'adresse reseaux remplacer les octects d'hote de l'addresse IP par 0
+
+    pr trouver la 1 ere adresse ajputer 1 au 4 eme octect de l'ID du premier reseaux 
+
+    5- pr trouver l'adresse de diffusion remplacer les octetcts d'hote de L'ID du reseaux par 255
+
+    6- pr trver la derniere adresse - 1 au 4 eme octect de l'addresse de diffusion du reseau
+
+
+                @diffusion  Masque 
+                @Debut      @Fin
+    192.
+
+    192.
+
+    192.
+
+
+
+
+02 methodes d'attribution des adrresse IP sur les hotes :
+
+dynamique : on utilise des protocoles qui attribu des ip aux hotes 
+        -Protocole RARP : Protocole associant les addresse mac aux addresse IP 
+
+        -protocole BOOTP permet a un equipemment de recuperer son adrr IP au demarage 
+
+        -protocole DHCP : il permet l'obtension dynamique l'adresse IP 
+
+
+
+WAN : reseaux long distance 
+        il connecte des reseaux lan eloigner a distance etendue 
+
+caracteristique: 
+        -fctnne au niv de la couche physique et de la couche reseaux
+        model de references OSIX 
+        -fonctionne au dela de la portee geographique des reseaux lan 
+    
+
+    *Routeurs *commutateur 
+
+
+-concenhtrateur (Hub) : concentrateur permet de mettre plusieurs equpement/ordinateur en contact ( reseaux)
+
+*diffusion 
+
+*le switch est un Hub inteligent {
+  - il permet de definir les destinataires des packets 
+  - il a un SE integrer 
+  - il permet de definir des paramettre de securiter
+}
+
+un routeur est un equiment du modele OSIX il pocede une table de routage 
+
+un routeur fonctionne comme un ordinateur on y trouve aussi un systeme d'exploitation , un processeur et des memoires 
+
+
+fonction des routeurs : 
+
+-les routeurs peuvent se connecter 
+-assure la communication entre 02 reseaux 
+-detrmine le meilleur chemin pour les donnees a travers les reseaux connecter 
+
+
+COMPOSANT DU ROUTEUR 
+
+ 
+
+
+
+
+
+
+
+
+
+Num_spect Numéro spectateur
+Nom_spect Nom spectateur
+Prénom_spect prénom spectateur
+Cin_spect genre spectateur
+Rue_spect rue spectateur
+Ville-spect ville spectateur
+Age_spect âge spectateur
+Num_catég Numéro catégorie
+LIB_Catég libellé catégorie
+Tarif tarif
+Mont_payer Montant à payer
+Date_reg Date de règlement
+Num_point_vente Numéro point de vente
+Point_vente Point de vente
+Nbre_place Nombre de place distribué
+Date_res Date de réservation
+Periode_ouver Période ouverte
+Num_rep Numéro de représentation
+Date_rep Date de représentation
+Heure_rep Heure de représentation
+Nbre_place_rest Nombre de place restant
+Num_spectacle Numéro spectacle
+Lib_spectacle Libellé spectacle
+Num_salle Numéro salle
+Capacité_salle 
+
+
+
+Num_spect
+Nom_spect
+Prénom_spect
+Cin_spect
+Rue_spect
+Ville-spect
+Age_spect
+Num_catég
+LIB_Catég
+Tarif
+Mont_payer
+Date_reg
+Num_point_vente
+Point_vente
+Nbre_place
+Date_res
+Periode_ouver
+Num_rep
+Date_rep
+Heure_rep
+Nbre_place_rest
+Num_spectacle
+Lib_spectacle
+Num_salle
+Capacité_salle
