@@ -28,6 +28,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useRouter } from "next/navigation"
+import { Router } from "next/router"
 
 
 
@@ -93,14 +95,14 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
 
   const { toast } = useToast()
-
+  const router = useRouter() 
   const { getAllCountries, getCountryStates, getStateCities } = useLocation()
 
   const countries = getAllCountries
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: hotel || {
 
       title: '',
       description: '',
@@ -126,6 +128,17 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
   })
 
   useEffect(() => {
+    if(typeof image === 'string'){
+      form.setValue('image', image ,{
+        shouldValidate:true,
+        shouldDirty:true,
+        shouldTouch:true,
+      })
+    }
+
+  }, [image]);
+
+  useEffect(() => {
     const selectedCountry = form.watch('country')
     const countryStates = getCountryStates(selectedCountry)
     if (countryStates) {
@@ -148,7 +161,29 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
 
-    console.log(values)
+    console.log(values);
+    setIsLoading(true);
+    if (hotel) {
+      //update
+    } else {
+      axios.post('/api/hotel', values).then((res) =>{
+        toast({
+          variant:"success",
+          description:'🎉Hotel Created',
+        })
+        router.push(`/hotel/${res.data.id}`)
+        setIsLoading(false)
+      }).catch((err)=>{
+        console.log(err)
+        toast({
+          variant:"destructive",
+          description:"Something went wrong!",
+        })
+        setIsLoading(false)
+      })
+    }
+
+
   }
 
 
@@ -160,6 +195,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
     axios.post('/api/uploadthing/delete', { imageKey }).then((res) => {
       if (res.data.success) {
         setImage('');
+        
         toast({
           variant: "success",
           description: "Image removed"
@@ -192,9 +228,9 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Hotel Title</FormLabel>
+                  <FormLabel>Hotel Title *</FormLabel>
                   <FormDescription>
-                    Provide your hotel name *
+                    Provide your hotel name 
                   </FormDescription>
 
                   <FormControl>
@@ -657,7 +693,11 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
             />
 
             <div className="flex justify-between gap-2 flex-wrap">
-              {hotel ? <Button className="max-w-[150px]" disabled={isLoading} > {isLoading ? <><Loader2 className="mr-2 h-4 w-4"/> Updating</>  : <><PencilLine className="mr-2 h-4 w-6" /> Update </> } </Button> : <Button  className="max-w-[150px]" disabled={isLoading}> {isLoading?  <> <Loader2 className="mr-2 h-4 w-4"/> Creating </>: <><Pencil className="mr-2 h-4 w-4"/>Create Hotel</>}   </Button> }
+              {hotel ? <Button className="max-w-[150px]" disabled={isLoading} > {isLoading ? <><Loader2 className="mr-2 h-4 w-4"/> Updating</>  : <><PencilLine className="mr-2 h-4 w-6" /> Update </> } </Button> : 
+              
+              <Button  className="max-w-[150px]" disabled={isLoading}> 
+              
+              {isLoading?  <> <Loader2 className="mr-2 h-4 w-4"/> Creating </>: <><Pencil className="mr-2 h-4 w-4"/>Create Hotel</>}   </Button> }
 
             </div>
 

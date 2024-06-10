@@ -8,7 +8,7 @@ const utapi = new UTApi
 
 export async function POST(req:Request) {
     const {userId} =auth()
-    if(!userId ) return new NextResponse("Unauthorized" , {status: 401} ) 
+    if(!userId ) return new NextResponse("Please log in" , {status: 401} ) 
         
         const {imageKey} = await req.json();
 
