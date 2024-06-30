@@ -21,9 +21,6 @@ export function NavMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-
-
-  
                 <ChevronsUpDown />
           <span className="sr-only">Toggle theme</span>
         </Button>

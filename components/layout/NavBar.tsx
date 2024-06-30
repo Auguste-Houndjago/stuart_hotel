@@ -19,7 +19,7 @@ export default function NavBar() {
   const { userId } = useAuth();
 
   return (
-    <div className='sticky top-0 border border-b-primary/10 bg-secondary'>
+    <div className='sticky top-0 border border-b-primary/10 bg-secondary z-50'>
 
 
       <Container>

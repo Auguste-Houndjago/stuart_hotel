@@ -16,7 +16,7 @@ import { Toast } from '@/components/ui/toast';
 import { useToast } from "@/components/ui/use-toast"
 import { Button } from "../ui/button"
 import Image from "next/image"
-import { Loader2, XCircle, PencilLine, Pencil } from 'lucide-react';
+import { Loader2, XCircle, PencilLine, Pencil, Trash, Eye, Plus } from 'lucide-react';
 import axios from 'axios'
 import useLocation from "@/app/hooks/useLocation"
 import { ICity, IState } from "country-state-city"
@@ -28,14 +28,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useRouter } from "next/navigation"
-import { Router } from "next/router"
+import { useRouter } from 'next/navigation'
+
+import { Terminal } from "lucide-react"
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import AddRoomForm from "../room/AddRoomForm"
+import BoutonCamera from "../ui/BoutonCamera"
+import CameraCaptureButton from "../ui/CameraCaptureButton"
+
 
 
 
 interface AddHotelFormProps {
   hotel: HotelWithRooms | null
+
 }
+
+
 
 export type HotelWithRooms = Hotel & {
   rooms: Room[]
@@ -86,16 +109,20 @@ const formSchema = z.object({
 
 const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
+  
   const [image, setImage] = useState<string | undefined>(hotel?.image)
   const [imageIsDeleting, setImageIsDeleting] = useState(false)
   const [states, setStates] = useState<IState[]>([])
   const [cities, setCities] = useState<ICity[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isHotelDeleting, setIsHotelDeleting] = useState<boolean>();
+  const [open, setOpen] = useState(false);
 
+  const [capturedImage, setCapturedImage] = useState<string | undefined>(image);
 
 
   const { toast } = useToast()
-  const router = useRouter() 
+  const router = useRouter()
   const { getAllCountries, getCountryStates, getStateCities } = useLocation()
 
   const countries = getAllCountries
@@ -128,11 +155,11 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
   })
 
   useEffect(() => {
-    if(typeof image === 'string'){
-      form.setValue('image', image ,{
-        shouldValidate:true,
-        shouldDirty:true,
-        shouldTouch:true,
+    if (typeof image === 'string') {
+      form.setValue('image', image, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
       })
     }
 
@@ -164,20 +191,37 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
     console.log(values);
     setIsLoading(true);
     if (hotel) {
-      //update
+      //update hotel 
+      if (hotel) {
+        axios.patch(`/api/hotel/${hotel.id}`, values).then((res) => {
+          toast({
+            variant: "success",
+            description: '🎉Hotel Updated!',
+          })
+          router.push(`/hotel/${res.data.id}`)
+          setIsLoading(false)
+        }).catch((err) => {
+          console.log(err)
+          toast({
+            variant: "destructive",
+            description: "🕸Hotel Updating error!",
+          })
+          setIsLoading(false)
+        })
+      }
     } else {
-      axios.post('/api/hotel', values).then((res) =>{
+      axios.post('/api/hotel', values).then((res) => {
         toast({
-          variant:"success",
-          description:'🎉Hotel Created',
+          variant: "success",
+          description: '🎉Hotel Created',
         })
         router.push(`/hotel/${res.data.id}`)
         setIsLoading(false)
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err)
         toast({
-          variant:"destructive",
-          description:"Something went wrong!",
+          variant: "destructive",
+          description: "🕸Hotel Creation error!",
         })
         setIsLoading(false)
       })
@@ -185,6 +229,37 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
 
   }
+
+  const HandleDeleteHotel = async (hotel: HotelWithRooms) => {
+
+    setIsHotelDeleting(true);
+
+    const getImageKey = (src: string) => src.substring(src.lastIndexOf('/') + 1)
+
+    try {
+      const imageKey = getImageKey(hotel.image)
+      await axios.post('/api/uploadthing/delete', { imageKey })
+      await axios.delete(`/api/hotel/${hotel.id}`)
+
+      setIsHotelDeleting(false)
+
+      toast({
+        variant: "success",
+        description: '🦋 Hotel Deleted!',
+      })
+      router.push('/hotel/new')
+    } catch (error: any) {
+      console.log(error)
+      setIsHotelDeleting(false)
+      toast({
+        variant: "destructive",
+        description: `🕸Hotel deletion could not be completed! ${error.message}`,
+      })
+    }
+
+  }
+
+
 
 
   // utilisation de toast pour les message popup de js 
@@ -195,7 +270,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
     axios.post('/api/uploadthing/delete', { imageKey }).then((res) => {
       if (res.data.success) {
         setImage('');
-        
+
         toast({
           variant: "success",
           description: "Image removed"
@@ -211,14 +286,15 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
     })
   }
 
+  const handleDialogueOpen = () => {
+    setOpen(prev => !prev)
+  }
 
 
   return (<div>
     <Form  {...form} >
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" >
         <h3 className="text-lg font-semibold" >{hotel ? 'Update your hotel!' : 'Describe your hotel!'}</h3>
-
-
 
         <div className="flex flex-col md:flex-row gap-6" >
 
@@ -230,7 +306,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                 <FormItem>
                   <FormLabel>Hotel Title *</FormLabel>
                   <FormDescription>
-                    Provide your hotel name 
+                    Provide your hotel name
                   </FormDescription>
 
                   <FormControl>
@@ -264,7 +340,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
               <FormDescription>Choose Amenities popular in your hotel</FormDescription>
 
-              <div className="grid grid-cols-2 gap-4 mt-2" >
+              <div className="grid grid-cols-2 gap-4 sm:gap-[6px] mt-2" >
                 <FormField
                   control={form.control}
                   name="gym"
@@ -532,10 +608,12 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
                     </> : <>
                       <div className="flex flex-col items-center max-w[400px] p-12 border-2 border-dashed border-primary/50 rounded mt-4">
+                      
+                      
                         <UploadButton
                           endpoint="imageUploader"
                           onClientUploadComplete={(res) => {
-                            // Do something with the response
+                            // utiliser la repponse (res)
                             console.log("Files: ", res);
 
                             setImage(res[0].url);
@@ -547,7 +625,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
                           }}
                           onUploadError={(error: Error) => {
-                            // Do something with the error.
+                             // afficher l'erreur (error)
 
                             toast({
                               variant: "destructive",
@@ -557,10 +635,15 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
                           }}
                         />
+       
+
                       </div>
                     </>}
 
                   </FormControl>
+
+      
+
                 </FormItem>
               )}
 
@@ -568,7 +651,14 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
             />
 
 
+
+            
+            
+
+
           </div>
+
+          <BoutonCamera setImage={setImage}/>
 
           <div className="flex-1 flex flex-col gap-6 " >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6" >
@@ -580,22 +670,22 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                     <FormLabel>Select Country *</FormLabel>
                     <FormDescription>In which country is Your propery located?</FormDescription>
 
-                    <Select disabled ={isLoading} 
-                     onValueChange = {field.onChange}
-                     value={field.value}
-                     defaultValue={field.value}
+                    <Select disabled={isLoading}
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      defaultValue={field.value}
                     >
-                     
+
                       <SelectTrigger className=" bg-background">
                         <SelectValue defaultValue={field.value} placeholder="Select a Country" />
                       </SelectTrigger>
 
                       <SelectContent>
 
-                          {countries.map((country) => {
-                            return <SelectItem key={country.isoCode}  value={country.isoCode} > {country.name} </SelectItem>
-                          })}
-                       
+                        {countries.map((country) => {
+                          return <SelectItem key={country.isoCode} value={country.isoCode} > {country.name} </SelectItem>
+                        })}
+
                       </SelectContent>
                     </Select>
 
@@ -605,7 +695,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
               />
 
-<FormField
+              <FormField
                 control={form.control}
                 name="state"
                 render={({ field }) => (
@@ -613,22 +703,22 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                     <FormLabel>Select State *</FormLabel>
                     <FormDescription>In which state is Your propery located?</FormDescription>
 
-                    <Select disabled ={isLoading || !states.length} 
-                     onValueChange = {field.onChange}
-                     value={field.value}
-                     defaultValue={field.value}
+                    <Select disabled={isLoading || !states.length}
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      defaultValue={field.value}
                     >
-                     
+
                       <SelectTrigger className=" bg-background">
                         <SelectValue defaultValue={field.value} placeholder="Select a State" />
                       </SelectTrigger>
 
                       <SelectContent>
 
-                          {states.map((state) => {
-                            return <SelectItem key={state.isoCode}  value={state.isoCode} > {state.name} </SelectItem>
-                          })}
-                       
+                        {states.map((state) => {
+                          return <SelectItem key={state.isoCode} value={state.isoCode} > {state.name} </SelectItem>
+                        })}
+
                       </SelectContent>
                     </Select>
 
@@ -640,39 +730,39 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
             </div>
 
             <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Select City *</FormLabel>
-                    <FormDescription>In which Town/City is Your propery located?</FormDescription>
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Select City *</FormLabel>
+                  <FormDescription>In which Town/City is Your propery located?</FormDescription>
 
-                    <Select disabled ={isLoading || cities.length < 1 } 
-                     onValueChange = {field.onChange}
-                     value={field.value}
-                     defaultValue={field.value}
-                    >
-                     
-                      <SelectTrigger className=" bg-background">
-                        <SelectValue defaultValue={field.value} placeholder="Select a City" />
-                      </SelectTrigger>
+                  <Select disabled={isLoading || cities.length < 1}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
 
-                      <SelectContent>
+                    <SelectTrigger className=" bg-background">
+                      <SelectValue defaultValue={field.value} placeholder="Select a City" />
+                    </SelectTrigger>
 
-                          {cities.map((city) => {
-                            return <SelectItem key={city.name}  value={city.name} > {city.name} </SelectItem>
-                          })}
-                       
-                      </SelectContent>
-                    </Select>
+                    <SelectContent>
 
-                  </FormItem>
+                      {cities.map((city) => {
+                        return <SelectItem key={city.name} value={city.name} > {city.name} </SelectItem>
+                      })}
 
-                )}
+                    </SelectContent>
+                  </Select>
 
-              />
+                </FormItem>
 
-              
+              )}
+
+            />
+
+
             <FormField
               control={form.control}
               name="locationDescription"
@@ -691,31 +781,60 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                 </FormItem>
               )}
             />
+            {hotel && !hotel.rooms.length &&
+              <Alert className="bg-indigo-200 border-2 border-solid border-black border-opacity-50 dark:bg-background dark:border-white/25 dark:text-white">
+                <Terminal className="h-4 w-4 dark:stroke-white" />
+                <AlertTitle>One last Step</AlertTitle>
+                <AlertDescription>
+                  Your hotel was created successfully
+                  <div>please add some rooms to complete your hotel setup!</div>
+                </AlertDescription>
+              </Alert>
+            }
+
 
             <div className="flex justify-between gap-2 flex-wrap">
-              {hotel ? <Button className="max-w-[150px]" disabled={isLoading} > {isLoading ? <><Loader2 className="mr-2 h-4 w-4"/> Updating</>  : <><PencilLine className="mr-2 h-4 w-6" /> Update </> } </Button> : 
-              
-              <Button  className="max-w-[150px]" disabled={isLoading}> 
-              
-              {isLoading?  <> <Loader2 className="mr-2 h-4 w-4"/> Creating </>: <><Pencil className="mr-2 h-4 w-4"/>Create Hotel</>}   </Button> }
+
+              {hotel && <Button onClick={() => HandleDeleteHotel(hotel)} variant='ghost' type="button" className="max-w-[150px]" disabled={isHotelDeleting || isLoading}>
+                {isHotelDeleting ? <><Loader2 className="mr-2 h-4 w-4" />Deleting..</> : <><Trash className="mr-2 h-4 w-4" />Delete</>}
+              </Button> }
+
+             {hotel && <Button onClick={() => router.push(`/hotel-details/${hotel.id}`)} variant='outline' type="button"><Eye className="mr-2 h-4 w-4" /> View </Button>}
+
+              {hotel &&
+                <Dialog open={open} onOpenChange={setOpen} >
+                  <DialogTrigger>
+                    <Button type="button" variant="ghost" className="max-w-[150px]">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add Room
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-[900px] w-[90%] h-[90%]">
+                    <DialogHeader className="px-2 " >
+                      <DialogTitle>Add a Room</DialogTitle>
+                      <DialogDescription>
+                        Add details about a room in your hotel.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <AddRoomForm hotel={hotel} handleDialogueOpen={handleDialogueOpen} />
+                  </DialogContent>
+                </Dialog>
+              }
+
+              {hotel ? <Button className="max-w-[150px]" disabled={isLoading} > {isLoading ? <><Loader2 className="mr-2 h-4 w-4" /> Updating</> : <><PencilLine className="mr-2 h-4 w-6" /> Update </>} </Button> :
+
+                <Button className="max-w-[150px]" disabled={isLoading}>
+
+                  {isLoading ? <> <Loader2 className="mr-2 h-4 w-4" /> Creating </> : <><Pencil className="mr-2 h-4 w-4" />Create Hotel</>}
+                </Button>}
 
             </div>
-
-            </div>
-              
-
-
+              {/* {hotel && !!hotel}    */}
+          </div>
         </div>
-
-
-
       </form>
 
-
     </Form>
-
-
-
 
   </div>
 

@@ -20,6 +20,7 @@ export const ourFileRouter = {
 
       return { userId };
     })
+
     .onUploadComplete(async ({ metadata, file }) => {
 
       console.log("Upload complete for userId:", metadata.userId);
@@ -27,10 +28,12 @@ export const ourFileRouter = {
       console.log("file url", file.url);
       const fileSizeInKB = (file.size / 1024).toFixed(2);
       console.log("File size:", fileSizeInKB, "KB");
-
+      
 
       return { uploadedBy: metadata.userId };
     }),
+
+    
 } satisfies FileRouter;
 
 

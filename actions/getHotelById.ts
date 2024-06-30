@@ -1,5 +1,5 @@
 import prismadb from "@/lib/prismadb"
-import Error from "next/error";
+
 
 
 
@@ -12,7 +12,7 @@ export const getHotelById = async (hotelId: string) => {
         },
             include:{
                 rooms:true,
-            },
+            }, 
     });
         if(!hotel) return null;
 

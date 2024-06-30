@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import Container from "@/components/Container";
 import { Toaster } from "@/components/ui/toaster"
 import { Toast } from "@/components/ui/toast";
+import { getHotelById } from "@/actions/getHotelById";
+import AddHotelForm from "@/components/hotel/AddHotelForm";
 
 
 
