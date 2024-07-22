@@ -225,7 +225,7 @@ function AddRoomForm({
                 </FormDescription>
                 <FormControl>
                   <Textarea
-                    placeholder='Have a beautiful iew of the ocean while in this room'
+                    placeholder='Have a beautiful view of the ocean while in this room'
                     {...field}
                   />
                 </FormControl>

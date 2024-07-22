@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "../ui/card"
 import Image from "next/image"
-import AmenityItem from "../Amenity"
+import AmenityItem from "../AmenityItem"
 import {
   AirVent,
   Bath,
@@ -107,8 +107,10 @@ function RoomCard({ hotel, room, bookings = [] }: RoomCardProps) {
     let dates: Date[] = []
 
     const roomBookings = bookings.filter(
-      booking => booking.roomId === room.id && booking.paymentStatus
+      booking => booking.roomId === room.id 
     )
+
+    // && booking.paymentStatus
 
     roomBookings.forEach((booking) => {
       const range = eachDayOfInterval({

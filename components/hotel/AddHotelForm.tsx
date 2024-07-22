@@ -49,6 +49,8 @@ import {
 import AddRoomForm from "../room/AddRoomForm"
 import BoutonCamera from "../ui/BoutonCamera"
 import CameraCaptureButton from "../ui/CameraCaptureButton"
+import { Separator } from "../ui/separator"
+import RoomCard from "../room/RoomCard"
 
 
 
@@ -829,7 +831,15 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                 </Button>}
 
             </div>
-              {/* {hotel && !!hotel}    */}
+              {hotel && !!hotel.rooms.length && <div> <Separator/>  
+              <h3 className="text-lg font-semibold my-4" >Hotel Rooms</h3>
+              <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6"></div>
+              {hotel.rooms.map(room=>{
+                return<RoomCard key={room.id} hotel={hotel} room={room} />
+              })}
+              
+              </div> }  
+
           </div>
         </div>
       </form>
