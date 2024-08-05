@@ -18,6 +18,8 @@ export default async function Home({searchParams}: HomeProps) {
 
   return (
     <div>
+      <div>Salut  Shi no Shenzhen (comment tu peut ecrire un nom pareil )</div>
+      
       <HotelList hotels={hotels} />
     </div>
   );

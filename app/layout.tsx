@@ -21,7 +21,7 @@ import AddHotelForm from "@/components/hotel/AddHotelForm";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Togo-hotel",
+  title: "Stuart-hotel",
   description: "trouver l'hotel qui vous convient",
   icons: { icon: '/logo.svg' }
 };
