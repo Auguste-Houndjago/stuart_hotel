@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Toast } from "@/components/ui/toast";
 import { getHotelById } from "@/actions/getHotelById";
 import AddHotelForm from "@/components/hotel/AddHotelForm";
+import LocationFilter from "@/components/LocationFilter";
 
 
 
@@ -49,6 +50,7 @@ export default function RootLayout({
 
             <main className="flex flex-col min-h-screen bg-secondary" >
               <NavBar />
+              <LocationFilter/>
               <section className="flex-grow" >
                 <Container>
                     {children}

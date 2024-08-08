@@ -20,7 +20,7 @@ import {
   CardTitle,
 } from "../ui/card"
 import Image from "next/image"
-import AmenityItem from "../Amenity"
+
 import {
   AirVent,
   Bath,
@@ -48,6 +48,7 @@ import { useAuth } from "@clerk/nextjs"
 import useBookRoom from "@/hooks/useBookRoom"
 import useLocation from "@/hooks/useLocation"
 import moment from "moment"
+import AmenityItem from "../AmenityItem"
 
 interface MyBookingsClientProps {
   booking: Booking & { Room: Room | null } & { Hotel: Hotel | null }
@@ -267,12 +268,12 @@ const MyBookingsClient: React.FC<MyBookingsClientProps> = ({ booking }) => {
           <div className='text-primary/50'>
             <div>
               Room booked by {booking.userName} for {dayCount} days -{" "}
-              {moment(booking.bookedAt).fromNow()}
+              {moment(booking.bookeAt).fromNow()}
             </div>
             <div>Check-in: {startDate} at 5PM</div>
             <div>Check-out: {endDate} at 5PM</div>
             {booking.breakFastIncluded && <div>Breakfast will be served</div>}
-            {booking.paymentStatus ? (
+            {booking.payementStatus ? (
               <div className='text-teal-500'>
                 Paid ${booking.totalPrice} - Room Reserved
               </div>
@@ -292,7 +293,7 @@ const MyBookingsClient: React.FC<MyBookingsClientProps> = ({ booking }) => {
           onClick={() => router.push(`/hotel-details/${Hotel.id}`)}>
           View Hotel
         </Button>
-        {!booking.paymentStatus && booking.userId === userId && (
+        {!booking.payementStatus && booking.userId === userId && (
           <Button
             disabled={bookingIsLoading}
             onClick={() => handleBookRoom()}>

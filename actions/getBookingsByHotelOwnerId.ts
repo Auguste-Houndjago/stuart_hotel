@@ -18,9 +18,9 @@ export const getBookingsByHotelOwnerId = async()=>{
         Room: true,
         Hotel: true,
       },
-      // orderBy: {
-      //   bookedAt: "desc",
-      // },
+      orderBy: {
+        bookeAt: "desc",
+      },
     }) ;
 
     if(!bookings) return null;

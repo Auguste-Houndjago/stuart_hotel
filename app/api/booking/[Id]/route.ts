@@ -16,9 +16,9 @@ export async function PATCH(req: Request, {params}: {params: {Id: string}}){
 
     const booking = await prismadb.booking.update({
       where: {
-        paymentIntentId: params.Id,
+        payementIntentId: params.Id,
       },
-      data: {paymentStatus: true},
+      data: {payementStatus: true},
     });
 
     return NextResponse.json(booking);
@@ -74,7 +74,7 @@ export async function GET(req: Request, {params}: {params: {Id: string}}){
 
     const bookings = await prismadb.booking.findMany({
       where: {
-        paymentStatus: true,
+        payementStatus: true,
         roomId: params.Id,
         endDate: {
           gt: yesterday,
