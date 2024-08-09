@@ -268,7 +268,7 @@ const MyBookingsClient: React.FC<MyBookingsClientProps> = ({ booking }) => {
           <div className='text-primary/50'>
             <div>
               Room booked by {booking.userName} for {dayCount} days -{" "}
-              {moment(booking.bookeAt).fromNow()}
+              {moment(booking.bookedAt).fromNow()}
             </div>
             <div>Check-in: {startDate} at 5PM</div>
             <div>Check-out: {endDate} at 5PM</div>

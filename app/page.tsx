@@ -18,7 +18,7 @@ export default async function Home({searchParams}: HomeProps) {
 
   return (
     <div>
-      <div> Salut l'application est toujour en cours de finalisation (cree votre hotel)</div>
+      <div> Salut l application est toujour en cours de finalisation (cree votre hotel)</div>
       
       <HotelList hotels={hotels} />
     </div>

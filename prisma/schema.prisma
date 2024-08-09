@@ -94,7 +94,7 @@ model Booking {
   totalPrice        Int
   payementStatus    Boolean  @default(false)
   payementIntentId  String   @unique
-  bookeAt           DateTime @default(now())
+  bookedAt           DateTime @default(now())
 
   Hotel Hotel? @relation(fields: [hotelId], references: [id])
 

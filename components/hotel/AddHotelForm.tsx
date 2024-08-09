@@ -1,3 +1,4 @@
+// eslint-disable-next-line react-hooks/exhaustive-deps
 'use client'
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,7 +13,6 @@ import { Textarea } from "../ui/textarea"
 import { Checkbox } from "../ui/checkbox"
 import { useEffect, useState } from "react"
 import { UploadButton } from "../uploadthing"
-import { Toast } from '@/components/ui/toast';
 import { useToast } from "@/components/ui/use-toast"
 import { Button } from "../ui/button"
 import Image from "next/image"
@@ -48,7 +48,6 @@ import {
 } from "@/components/ui/dialog"
 import AddRoomForm from "../room/AddRoomForm"
 import BoutonCamera from "../ui/BoutonCamera"
-import CameraCaptureButton from "../ui/CameraCaptureButton"
 import { Separator } from "../ui/separator"
 import RoomCard from "../room/RoomCard"
 
@@ -184,7 +183,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
     if (stateCities) {
       setCities(stateCities)
     }
-
+ 
   }, [form.watch('country'), form.watch('state')])
 
 
