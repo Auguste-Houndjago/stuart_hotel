@@ -17,9 +17,7 @@ export default async function Home({searchParams}: HomeProps) {
   if(!hotels) return (<div>No hotels found...</div>)
 
   return (
-    <div>
-      <div> Salut l application est toujour en cours de finalisation (cree votre hotel)</div>
-      
+    <div>      
       <HotelList hotels={hotels} />
     </div>
   );
