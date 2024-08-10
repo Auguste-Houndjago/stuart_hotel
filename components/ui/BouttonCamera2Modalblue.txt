@@ -96,7 +96,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
         setImage(URL.createObjectURL(blob));
       }
     }
-    setIsCameraOpen(false);
+    // setIsCameraOpen(false);
   };
 
   return (
