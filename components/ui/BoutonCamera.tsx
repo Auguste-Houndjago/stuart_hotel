@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { generateReactHelpers, useDropzone } from "@uploadthing/react";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 import { ourFileRouter } from '@/app/api/uploadthing/core';
@@ -22,6 +22,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [files, setFiles] = useState<File[]>([]);
+  const [stream, setStream] = useState<MediaStream | null>(null);
   
   const { permittedFileInfo, startUpload } = useUploadThing(
     "imageUploader",
@@ -50,35 +51,45 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
     accept: fileTypes ? generateClientDropzoneAccept(fileTypes) : undefined,
   });
 
-  const openCamera = () => {
+  const openCamera = useCallback(() => {
     setIsCameraOpen(true);
-    startCamera();
-  };
+  }, []);
 
-  const startCamera = () => {
+  const startCamera = useCallback(() => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
+
     const constraints = {
       video: { facingMode: isFrontCamera ? "user" : "environment" }
     };
     
     navigator.mediaDevices.getUserMedia(constraints)
-      .then((stream) => {
+      .then((newStream) => {
+        setStream(newStream);
         if (videoRef.current) {
-          videoRef.current.srcObject = stream;
+          videoRef.current.srcObject = newStream;
           videoRef.current.play();
         }
       })
       .catch((err) => {
         console.error("Error accessing the camera: ", err);
       });
-  };
+  }, [isFrontCamera, stream]);
+
+  useEffect(() => {
+    if (isCameraOpen) {
+      startCamera();
+    }
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [isCameraOpen, startCamera, stream]);
 
   const switchCamera = () => {
     setIsFrontCamera(!isFrontCamera);
-    if (videoRef.current && videoRef.current.srcObject) {
-      const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach(track => track.stop());
-    }
-    startCamera();
   };
 
   const captureImage = async () => {
@@ -96,15 +107,15 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
         setImage(URL.createObjectURL(blob));
       }
     }
-    
+    // setIsCameraOpen(false);
   };
 
   return (
     <div>
       <button onClick={openCamera}> camera <FaCamera /> </button>
       {isCameraOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-indigo-200 p-4 rounded-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded-lg">
             <video ref={videoRef} style={{ width: '100%', maxWidth: '500px' }}></video>
             <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
             <div className="mt-4 flex justify-between">
