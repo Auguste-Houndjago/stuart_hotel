@@ -52,10 +52,15 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
 
   const openCamera = () => {
     setIsCameraOpen(true);
-    // startCamera();
+    startCamera();
+  };
 
-    setIsCameraOpen(true);
-    navigator.mediaDevices.getUserMedia({ video: true })
+  const startCamera = () => {
+    const constraints = {
+      video: { facingMode: isFrontCamera ? "user" : "environment" }
+    };
+    
+    navigator.mediaDevices.getUserMedia(constraints)
       .then((stream) => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -65,9 +70,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
       .catch((err) => {
         console.error("Error accessing the camera: ", err);
       });
-
   };
-
 
   const switchCamera = () => {
     setIsFrontCamera(!isFrontCamera);
@@ -75,7 +78,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
       tracks.forEach(track => track.stop());
     }
-    // startCamera();
+    startCamera();
   };
 
   const captureImage = async () => {
@@ -93,7 +96,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
         setImage(URL.createObjectURL(blob));
       }
     }
-    setIsCameraOpen(false);
+    // setIsCameraOpen(false);
   };
 
   return (
