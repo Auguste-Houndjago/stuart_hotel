@@ -42,13 +42,13 @@ export default function RootLayout({
 
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
             <Toaster/>
 
-            <main className="flex flex-col min-h-screen bg-secondary" >
+            <main className="flex flex-col min-h-screen dark:bg-secondary bg-gradient-to-b from-sky-100/25 to-sky-200 " >
               <NavBar />
               <LocationFilter/>
               <section className="flex-grow" >
