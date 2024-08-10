@@ -6,6 +6,7 @@ import { TbCapture } from "react-icons/tb";
 import { FaCamera } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import { MdCameraFront, MdCameraRear } from "react-icons/md";
+import Image from 'next/image';
 
 interface BoutonCameraProps {
   setImage: (url: string) => void; 
@@ -101,7 +102,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
 
   return (
     <div>
-      <button onClick={openCamera}> camera <FaCamera /> </button>
+      <button onClick={openCamera}> camera <Image src="/digital-camera.png" alt='camer-icon' width={40} height={40} /> </button>
       {isCameraOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-indigo-200 p-4 rounded-lg">
