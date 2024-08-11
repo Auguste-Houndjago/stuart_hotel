@@ -121,6 +121,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
   const [capturedImage, setCapturedImage] = useState<string | undefined>(image);
 
+  const [isCameraOpen, setisCameraOpen] = useState(false);
 
   const { toast } = useToast()
   const router = useRouter()
@@ -293,8 +294,8 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
 
   return (<div>
-    <Form  {...form} >
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" >
+    <Form  {...form}  >
+      <form onSubmit={form.handleSubmit(onSubmit)} className={`space-y-6 ${isCameraOpen ? 'pointer-events-none': ''}`} >
         <h3 className="text-lg font-semibold" >{hotel ? 'Update your hotel!' : 'Describe your hotel!'}</h3>
 
         <div className="flex flex-col md:flex-row gap-6" >
@@ -658,9 +659,9 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
 
           </div>
-
-          <BoutonCamera setImage={setImage}/>
-
+          <span className="pointer-events-auto">
+          <BoutonCamera onCameraStateChange={setisCameraOpen} setImage={setImage}/>
+          </span>
           <div className="flex-1 flex flex-col gap-6 " >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6" >
               <FormField

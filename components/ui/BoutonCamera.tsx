@@ -1,4 +1,6 @@
-import React, { useState, useRef, useCallback } from 'react';
+"use client"
+
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { generateReactHelpers, useDropzone } from "@uploadthing/react";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 import { ourFileRouter } from '@/app/api/uploadthing/core';
@@ -10,6 +12,7 @@ import Image from 'next/image';
 
 interface BoutonCameraProps {
   setImage: (url: string) => void; 
+  onCameraStateChange :(isOpen:boolean)=> void ;
 }
 
 export type OurFileRouter = typeof ourFileRouter;
@@ -17,7 +20,7 @@ export type OurFileRouter = typeof ourFileRouter;
 export const { useUploadThing, uploadFiles } =
   generateReactHelpers<OurFileRouter>();
 
-const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
+const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage,onCameraStateChange }) => {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [isFrontCamera, setIsFrontCamera] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -54,11 +57,27 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
 
   const openCamera = () => {
     setIsCameraOpen(true);
+    onCameraStateChange(true);
     startCamera();
-      if (CaptureRef.current) {
-        CaptureRef.current.focus();
-      }
+
   };
+
+  const closeCamera =() => {
+    setIsCameraOpen(false);
+    onCameraStateChange(false);
+  };
+
+  //plus utile dans le code servait a empecher le focus du hotelForm
+  useEffect(() => {
+      
+    if ( isCameraOpen ) {
+     
+      window.dispatchEvent(new Event('focusCapture'))
+    }
+
+
+  }, [isCameraOpen]);
+//end
 
   const startCamera = () => {
     const constraints = {
@@ -75,6 +94,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
       .catch((err) => {
         console.error("Error accessing the camera: ", err);
       });
+
   };
 
   const switchCamera = () => {
@@ -101,8 +121,6 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
       }
     })
 
-
-
     if (canvasRef.current && videoRef.current) {
       const canvas = canvasRef.current;
       const video = videoRef.current;
@@ -118,19 +136,12 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
       }
     }
 
-   
     // setIsCameraOpen(false);
   };
 
-  // const captureEffect= (e:React.MouseEvent.<HTMLButtonElement>)=>{
-  //   e.currentTarget.classList.add('capture');
-
-  // }
-
-
 
   return (
-    <div>
+    <div className='pointer-events-auto' >
       <button onClick={openCamera} className='hover:scale-75 border border-dashed border-white transition rounded-md w-16 h-16 focus:scale-75' style={{
         backgroundImage:`url('/digital-camera.png')`,
         backgroundSize:'contain',
@@ -153,8 +164,8 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
               <button onClick={switchCamera}>
                 {isFrontCamera ? <MdCameraRear /> : <MdCameraFront />}
               </button>
-              <button ref={CaptureRef} onClick={captureImage} className='inline-grid place-items-center focus:shadow-sm '><TbCapture /> Take Shot</button>
-              <button onClick={() => setIsCameraOpen(false)}>Close</button>
+              <button id='captureButton' ref={CaptureRef} tabIndex={0} onClick={captureImage} className='inline-grid place-items-center focus:shadow-sm '><TbCapture /> Take Shot</button>
+              <button onClick={closeCamera}>Close</button>
             </div>
           </div>
         </div>

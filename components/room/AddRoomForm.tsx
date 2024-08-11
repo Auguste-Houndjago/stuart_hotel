@@ -111,6 +111,8 @@ function AddRoomForm({
     },
   })
 
+
+
   useEffect(() => {
     if (typeof image === "string") {
       form.setValue("image", image, {
@@ -621,4 +623,4 @@ function AddRoomForm({
   )
 }
 
-export default AddRoomForm
+export default AddRoomForm;

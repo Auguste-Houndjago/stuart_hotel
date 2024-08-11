@@ -1,3 +1,28 @@
+
+//modification sur la camera (pour empecher le focus du clavier sur phone) a deplacer dans hoter form
+
+
+
+
+  // useEffect(() => {
+  //   const capture =()=>{
+  //     const captureButton = document.querySelector('#captureButton')
+  //     if (captureButton instanceof HTMLElement) {
+  //       captureButton.focus();
+  //     }
+  //   }
+
+  //   window.addEventListener('focusCapture', capture);
+  //   return () => {
+  //     window.removeEventListener('focusCapture', capture)
+  //   };
+  // }, []);
+
+//fin
+
+
+
+
 //@ts-nocheck
 
 
