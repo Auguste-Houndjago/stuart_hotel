@@ -607,11 +607,9 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
                       </div>
 
-
                     </> : <>
                       <div className="flex flex-col items-center max-w[400px] p-12 border-2 border-dashed border-primary/50 rounded mt-4">
-                      
-                      
+
                         <UploadButton
                           endpoint="imageUploader"
                           onClientUploadComplete={(res) => {
