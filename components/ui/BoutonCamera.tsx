@@ -23,6 +23,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [files, setFiles] = useState<File[]>([]);
+  const CaptureRef =useRef<HTMLButtonElement>(null);
   
   const { permittedFileInfo, startUpload } = useUploadThing(
     "imageUploader",
@@ -54,6 +55,9 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
   const openCamera = () => {
     setIsCameraOpen(true);
     startCamera();
+      if (CaptureRef.current) {
+        CaptureRef.current.focus();
+      }
   };
 
   const startCamera = () => {
@@ -149,23 +153,23 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
               <button onClick={switchCamera}>
                 {isFrontCamera ? <MdCameraRear /> : <MdCameraFront />}
               </button>
-              <button onClick={captureImage} className='inline-grid place-items-center focus:shadow-sm '><TbCapture /> Take Shot</button>
+              <button ref={CaptureRef} onClick={captureImage} className='inline-grid place-items-center focus:shadow-sm '><TbCapture /> Take Shot</button>
               <button onClick={() => setIsCameraOpen(false)}>Close</button>
             </div>
           </div>
         </div>
       )}
-      <div {...getRootProps()}>
+      <div {...getRootProps()} className='hidden'>
         <input {...getInputProps()} />
-        <div>
+        <div >
           {files.length > 0 && (
             <button onClick={() => startUpload(files)}>
               Upload {files.length} files
             </button>
           )}
         </div>
-        {/* Drop files here!
-        <GoFileMedia /> */}
+        Drop files here!
+        <GoFileMedia />
       </div>
     </div>
   );
