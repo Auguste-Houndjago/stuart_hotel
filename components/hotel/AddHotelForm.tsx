@@ -300,7 +300,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
         <div className="flex flex-col md:flex-row gap-6" >
 
-          <div className="flex-1 flex flex-col gap-6" >
+          <div className="flex-1 flex flex-col gap-6 " >
             <FormField
               control={form.control}
               name="title"
@@ -347,7 +347,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="gym"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4 border-current">
 
 
                       <FormControl>
@@ -367,7 +367,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="spa"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -387,7 +387,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="bar"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -406,14 +406,14 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="laundry"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
                         <Checkbox checked={field.value} onCheckedChange={field.onChange} />
 
                       </FormControl>
-                      <FormLabel> Laundry Facilities </FormLabel>
+                      <FormLabel> Laundry </FormLabel>
 
                       <FormMessage />
                     </FormItem>
@@ -425,7 +425,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="restaurant"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -445,7 +445,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="shopping"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -465,7 +465,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="freeParking"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -485,7 +485,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="bikeRental"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -505,7 +505,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="freeWifi"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -525,7 +525,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="movieNights"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -545,7 +545,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="swimmingPool"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
 
 
                       <FormControl>
@@ -565,7 +565,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                   control={form.control}
                   name="coffeeShop"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current dark:border-current/80 p-4 ">
 
 
                       <FormControl>
