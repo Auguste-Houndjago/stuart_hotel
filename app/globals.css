@@ -83,3 +83,12 @@
   top: 0%;
   left: 60%;
 }
+
+button.capture{
+transform: scale(1.2);
+filter:blur(2px);
+opacity:0.8;
+transition: all 0.3s ease;
+mix-blend-mode: luminosity;
+
+}

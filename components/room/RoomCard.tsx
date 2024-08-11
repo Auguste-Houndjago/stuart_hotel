@@ -337,12 +337,12 @@ function RoomCard({ hotel, room, bookings = [] }: RoomCardProps) {
         <Separator />
         <div className='flex gapp-4 justify-between'>
           <div>
-            Room Price: <span className='font-bold'>${room.roomPrice}</span>
+            Room Price: <span className='font-bold'>{room.roomPrice} FCFA</span>
           </div>
           {!!room.breackFastPrice && (
             <div>
               BreakFast Price:{" "}
-              <span className='font-bold'>${room.breackFastPrice}</span>
+              <span className='font-bold'>{room.breackFastPrice} FCFA</span>
             </div>
           )}
         </div>
@@ -380,7 +380,7 @@ function RoomCard({ hotel, room, bookings = [] }: RoomCardProps) {
                 </div>
               )}
               <div>
-                Total Price: <span className='font-bold'>${totalPrice}</span>{" "}
+                Total Price: <span className='font-bold'>{totalPrice} FCFA</span>{" "}
                 for <span className='font-bold'>${days} Days</span>
               </div>
               <Button

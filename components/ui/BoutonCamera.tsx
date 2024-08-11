@@ -82,7 +82,23 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
     startCamera();
   };
 
-  const captureImage = async () => {
+  const captureImage = async (e:React.MouseEvent<HTMLButtonElement>) => {
+
+    const CaptureButton =e.currentTarget;
+
+
+    CaptureButton.classList.add('capture');
+    
+    requestAnimationFrame(()=>{
+      if (CaptureButton) {
+        setTimeout(()=>{
+          CaptureButton.classList.remove('capture')
+        }, 300);
+      }
+    })
+
+
+
     if (canvasRef.current && videoRef.current) {
       const canvas = canvasRef.current;
       const video = videoRef.current;
@@ -97,12 +113,33 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
         setImage(URL.createObjectURL(blob));
       }
     }
+
+   
     // setIsCameraOpen(false);
   };
 
+  // const captureEffect= (e:React.MouseEvent.<HTMLButtonElement>)=>{
+  //   e.currentTarget.classList.add('capture');
+
+  // }
+
+
+
   return (
     <div>
-      <button onClick={openCamera}> camera <Image src="/digital-camera.png" alt='camer-icon' width={40} height={40} /> </button>
+      <button onClick={openCamera} className='hover:scale-75 border border-dashed border-white transition rounded-md w-16 h-16 focus:scale-75' style={{
+        backgroundImage:`url('/digital-camera.png')`,
+        backgroundSize:'contain',
+        backgroundPosition:'center',
+        backgroundRepeat:'no-repeat'
+      }} > 
+      
+      camera 
+      
+      {/* <Image src="/digital-camera.png" alt='camer-icon' width={40} height={40} /> */}
+      
+       </button>
+
       {isCameraOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-indigo-200 p-4 rounded-lg">
@@ -112,7 +149,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
               <button onClick={switchCamera}>
                 {isFrontCamera ? <MdCameraRear /> : <MdCameraFront />}
               </button>
-              <button onClick={captureImage}><TbCapture /> Take Shot</button>
+              <button onClick={captureImage} className='inline-grid place-items-center focus:shadow-sm '><TbCapture /> Take Shot</button>
               <button onClick={() => setIsCameraOpen(false)}>Close</button>
             </div>
           </div>
@@ -127,8 +164,8 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage }) => {
             </button>
           )}
         </div>
-        Drop files here!
-        <GoFileMedia />
+        {/* Drop files here!
+        <GoFileMedia /> */}
       </div>
     </div>
   );
