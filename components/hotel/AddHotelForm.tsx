@@ -51,6 +51,7 @@ import BoutonCamera from "../ui/BoutonCamera"
 import { Separator } from "../ui/separator"
 import RoomCard from "../room/RoomCard"
 
+import LordIcon from '@Components/ui/LordIcon'
 
 
 
@@ -110,7 +111,7 @@ const formSchema = z.object({
 
 const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
-  
+
   const [image, setImage] = useState<string | undefined>(hotel?.image)
   const [imageIsDeleting, setImageIsDeleting] = useState(false)
   const [states, setStates] = useState<IState[]>([])
@@ -184,7 +185,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
     if (stateCities) {
       setCities(stateCities)
     }
- 
+
   }, [form.watch('country'), form.watch('state')])
 
 
@@ -295,7 +296,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
   return (<div>
     <Form  {...form}  >
-      <form onSubmit={form.handleSubmit(onSubmit)} className={`space-y-6 ${isCameraOpen ? 'pointer-events-none': ''}`} >
+      <form onSubmit={form.handleSubmit(onSubmit)} className={`space-y-6 ${isCameraOpen ? 'pointer-events-none' : ''}`} >
         <h3 className="text-lg font-semibold" >{hotel ? 'Update your hotel!' : 'Describe your hotel!'}</h3>
 
         <div className="flex flex-col md:flex-row gap-6" >
@@ -342,7 +343,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
               <FormDescription>Choose Amenities popular in your hotel</FormDescription>
 
-              <div className="grid grid-cols-2 gap-4 sm:gap-[6px] mt-2" >
+              <div className="grid grid-cols-2 gap-4 sm:gap-[6px] mt-2 field" >
                 <FormField
                   control={form.control}
                   name="gym"
@@ -383,18 +384,29 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
                 />
 
+
                 <FormField
                   control={form.control}
                   name="bar"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4">
+                    <FormItem className="flex flex-row items-end space-x-3 rounded-md border border-current p-4 icones">
 
 
                       <FormControl>
                         <Checkbox checked={field.value} onCheckedChange={field.onChange} />
 
                       </FormControl>
-                      <FormLabel> Bar </FormLabel>
+                      <FormLabel className="relative"> Bar
+
+                        <span className=" absolute top-1/2 left-full transform -translate-x-1/2 -translate-y-1/2 ml-6 iconS " >
+                          <LordIcon
+                            src="https://cdn.lordicon.com/wnacayju.json"
+                            trigger="hover"
+                            size=""
+
+                          />
+                        </span>
+                      </FormLabel>
 
                       <FormMessage />
                     </FormItem>
@@ -432,7 +444,12 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                         <Checkbox checked={field.value} onCheckedChange={field.onChange} />
 
                       </FormControl>
-                      <FormLabel> restaurant </FormLabel>
+                      <FormLabel className="relative text-sm md:text-xs "> restaurant
+
+                        <span className=" absolute top-1/2 left-full transform -translate-x-1/2 -translate-y-1/2 ml-6 iconS repat h-8 w-8 " >
+                          
+                        </span>
+                      </FormLabel>
 
                       <FormMessage />
                     </FormItem>
@@ -440,6 +457,8 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
 
                 />
+
+
 
                 <FormField
                   control={form.control}
@@ -500,6 +519,8 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
 
                 />
+
+
 
                 <FormField
                   control={form.control}
@@ -591,7 +612,6 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                 <FormItem className="flex flex-col space-y-3">
 
 
-
                   <FormLabel> Upload an Image *</FormLabel>
                   <FormDescription>Choose an Image that will show-case your hotel nicely</FormDescription>
                   <FormMessage />
@@ -625,7 +645,7 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
                           }}
                           onUploadError={(error: Error) => {
-                             // afficher l'erreur (error)
+                            // afficher l'erreur (error)
 
                             toast({
                               variant: "destructive",
@@ -635,14 +655,14 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
                           }}
                         />
-       
+
 
                       </div>
                     </>}
 
                   </FormControl>
 
-      
+
 
                 </FormItem>
               )}
@@ -652,13 +672,13 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
 
 
-            
-            
+
+
 
 
           </div>
           <span className="pointer-events-auto">
-          <BoutonCamera onCameraStateChange={setisCameraOpen} setImage={setImage}/>
+            <BoutonCamera onCameraStateChange={setisCameraOpen} setImage={setImage} />
           </span>
           <div className="flex-1 flex flex-col gap-6 " >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6" >
@@ -797,9 +817,9 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
 
               {hotel && <Button onClick={() => HandleDeleteHotel(hotel)} variant='ghost' type="button" className="max-w-[150px]" disabled={isHotelDeleting || isLoading}>
                 {isHotelDeleting ? <><Loader2 className="mr-2 h-4 w-4" />Deleting..</> : <><Trash className="mr-2 h-4 w-4" />Delete</>}
-              </Button> }
+              </Button>}
 
-             {hotel && <Button onClick={() => router.push(`/hotel-details/${hotel.id}`)} variant='outline' type="button"><Eye className="mr-2 h-4 w-4" /> View </Button>}
+              {hotel && <Button onClick={() => router.push(`/hotel-details/${hotel.id}`)} variant='outline' type="button"><Eye className="mr-2 h-4 w-4" /> View </Button>}
 
               {hotel &&
                 <Dialog open={open} onOpenChange={setOpen} >
@@ -829,14 +849,14 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
                 </Button>}
 
             </div>
-              {hotel && !!hotel.rooms.length && <div> <Separator/>  
+            {hotel && !!hotel.rooms.length && <div> <Separator />
               <h3 className="text-lg font-semibold my-4" >Hotel Rooms</h3>
               <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6"></div>
-              {hotel.rooms.map(room=>{
-                return<RoomCard key={room.id} hotel={hotel} room={room} />
+              {hotel.rooms.map(room => {
+                return <RoomCard key={room.id} hotel={hotel} room={room} />
               })}
-              
-              </div> }  
+
+            </div>}
 
           </div>
         </div>

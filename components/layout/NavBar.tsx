@@ -50,7 +50,7 @@ export default function NavBar() {
 
             </div>
       </Container>
-
+      <script src="https://cdn.lordicon.com/lordicon.js" async />
     </div>
   )
 }

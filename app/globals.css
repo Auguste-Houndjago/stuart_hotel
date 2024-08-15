@@ -92,3 +92,42 @@ transition: all 0.3s ease;
 mix-blend-mode: luminosity;
 
 }
+
+.field > * {
+  opacity: 1;
+}
+
+
+.field > :active {
+  background-color: rgb(109, 169, 238);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+}
+
+.iconS{
+  opacity: 1;
+  vertical-align: -2px;
+  
+
+}
+
+.repat{
+  background-image: url("/images/repat.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  animation: blink 2s infinite; 
+  transition: background-image 0.5s ease, box-shadow 0.5s ease; 
+  animation: pulseIconi 1.5s infinite ease-in-out;
+
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; background-size: contain; }
+  50% { opacity: 0.9; background-size: 80%; } 
+}
+
+.repat:hover{
+  background-image: url("/images/restaurant.svg");
+}
+
