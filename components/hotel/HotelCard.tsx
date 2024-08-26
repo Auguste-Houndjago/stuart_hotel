@@ -11,14 +11,23 @@ import { Dumbbell, MapPin, Waves } from "lucide-react"
 import useLocation from "@/hooks/useLocation"
 import { Button } from "../ui/button"
 import { FaSwimmer } from "react-icons/fa"
+import { useState } from "react"
+import Loader from "../ui/Loader"
 
 function HotelCard({ hotel }: { hotel: HotelWithRooms }) {
+
+  const [imageLoading, setImageLoading] = useState(true);
+
   const pathname = usePathname()
   const isMyHotel = pathname.includes("my-hotels")
   const router = useRouter()
 
   const { getCountryByCode } = useLocation()
   const country = getCountryByCode(hotel.country)
+
+  const ImageSkeleton = () => (
+    <div className="w-full h-full bg-gray-200 animate-pulse rounded-s-lg" />
+  );
 
   return (
     <div
@@ -29,11 +38,16 @@ function HotelCard({ hotel }: { hotel: HotelWithRooms }) {
       )}>
       <div className='flex gap-2 bg-background/50 border border-primary/10 rounded-lg'>
         <div className='flex-1 aspect-square overflow-hidden relative w-full h-[210px] rounded-s-lg'>
+          {imageLoading && <Loader/>}
           <Image
             fill
             src={hotel.image}
             alt={hotel.title}
-            className='w-ful h-full object-cover'
+            className={cn(
+              'w-full h-full object-cover',
+              imageLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'
+            )}
+            onLoadingComplete={() => setImageLoading(false)}
           />
         </div>
 

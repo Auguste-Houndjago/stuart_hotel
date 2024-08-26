@@ -44,6 +44,7 @@
     "react-hook-form": "^7.51.3",
     "react-icons": "^5.2.1",
     "stripe": "^16.6.0",
+    "styled-components": "^6.1.12",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.10.4",
