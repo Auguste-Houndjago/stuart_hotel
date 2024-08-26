@@ -152,7 +152,7 @@ function LocationFilter() {
             </SelectContent>
           </Select>
         </div>
-        <Button className="p-1 mr-4" onClick={()=> handleClear()} variant="outline">Clear</Button>
+        <Button className="px-2 mr-4" onClick={()=> handleClear()} variant="outline">Clear </Button>
       </div>
     </Container>
   )
