@@ -98,7 +98,7 @@ function LocationFilter() {
 
   return (
     <Container>
-      <div className="flex gap-2 md:gap-4 items-center mx-1 px-2 justify-center text-sm">
+      <div className="flex gap-2 md:gap-4 items-center mx-4 px-4 md:mx-1 md:px-2 justify-center text-sm">
         <div>
           <Select
             onValueChange={(value)=> setCountry(value)}
@@ -152,7 +152,7 @@ function LocationFilter() {
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={()=> handleClear()} variant="outline">Clear Filters</Button>
+        <Button className="p-2" onClick={()=> handleClear()} variant="outline">Clear Filters</Button>
       </div>
     </Container>
   )
