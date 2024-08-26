@@ -5,7 +5,6 @@ import { generateReactHelpers, useDropzone } from "@uploadthing/react";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 import { ourFileRouter } from '@/app/api/uploadthing/core';
 import { TbCapture } from "react-icons/tb";
-import { FaCamera } from "react-icons/fa";
 import { GoFileMedia } from "react-icons/go";
 import { MdCameraFront, MdCameraRear } from "react-icons/md";
 import Image from 'next/image';
@@ -20,13 +19,13 @@ export type OurFileRouter = typeof ourFileRouter;
 export const { useUploadThing, uploadFiles } =
   generateReactHelpers<OurFileRouter>();
 
-const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage,onCameraStateChange }) => {
+const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage, onCameraStateChange }) => {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
-  const [isFrontCamera, setIsFrontCamera] = useState(true);
+  const [isFrontCamera, setIsFrontCamera] = useState(false); // Set to false for back camera by default
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [files, setFiles] = useState<File[]>([]);
-  const CaptureRef =useRef<HTMLButtonElement>(null);
+  const CaptureRef = useRef<HTMLButtonElement>(null);
   
   const { permittedFileInfo, startUpload } = useUploadThing(
     "imageUploader",
@@ -59,25 +58,23 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage,onCameraStateChang
     setIsCameraOpen(true);
     onCameraStateChange(true);
     startCamera();
-
   };
 
-  const closeCamera =() => {
+  const closeCamera = () => {
     setIsCameraOpen(false);
     onCameraStateChange(false);
+    // Stop all video tracks to release the camera
+    if (videoRef.current && videoRef.current.srcObject) {
+      const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
+      tracks.forEach(track => track.stop());
+    }
   };
 
-  //plus utile dans le code servait a empecher le focus du hotelForm
   useEffect(() => {
-      
-    if ( isCameraOpen ) {
-     
-      window.dispatchEvent(new Event('focusCapture'))
+    if (isCameraOpen) {
+      window.dispatchEvent(new Event('focusCapture'));
     }
-
-
   }, [isCameraOpen]);
-//end
 
   const startCamera = () => {
     const constraints = {
@@ -94,32 +91,30 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage,onCameraStateChang
       .catch((err) => {
         console.error("Error accessing the camera: ", err);
       });
-
   };
 
   const switchCamera = () => {
-    setIsFrontCamera(!isFrontCamera);
+    setIsFrontCamera(prev => !prev); // Toggle the camera mode
+    // Stop current camera before switching
     if (videoRef.current && videoRef.current.srcObject) {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
       tracks.forEach(track => track.stop());
     }
-    startCamera();
+    startCamera(); // Start camera with new facing mode
   };
 
-  const captureImage = async (e:React.MouseEvent<HTMLButtonElement>) => {
-
-    const CaptureButton =e.currentTarget;
-
+  const captureImage = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const CaptureButton = e.currentTarget;
 
     CaptureButton.classList.add('capture');
     
-    requestAnimationFrame(()=>{
+    requestAnimationFrame(() => {
       if (CaptureButton) {
-        setTimeout(()=>{
-          CaptureButton.classList.remove('capture')
+        setTimeout(() => {
+          CaptureButton.classList.remove('capture');
         }, 300);
       }
-    })
+    });
 
     if (canvasRef.current && videoRef.current) {
       const canvas = canvasRef.current;
@@ -135,25 +130,18 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage,onCameraStateChang
         setImage(URL.createObjectURL(blob));
       }
     }
-
-    // setIsCameraOpen(false);
   };
 
-
   return (
-    <div className='pointer-events-auto' >
+    <div className='pointer-events-auto'>
       <button onClick={openCamera} className='hover:scale-75 border border-dashed border-white transition rounded-md w-16 h-16 focus:scale-75' style={{
-        backgroundImage:`url('/digital-camera.png')`,
-        backgroundSize:'contain',
-        backgroundPosition:'center',
-        backgroundRepeat:'no-repeat'
-      }} > 
-      
-      camera 
-      
-      {/* <Image src="/digital-camera.png" alt='camer-icon' width={40} height={40} /> */}
-      
-       </button>
+        backgroundImage: `url('/digital-camera.png')`,
+        backgroundSize: 'contain',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}>
+        camera
+      </button>
 
       {isCameraOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -164,7 +152,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage,onCameraStateChang
               <button onClick={switchCamera}>
                 {isFrontCamera ? <MdCameraRear /> : <MdCameraFront />}
               </button>
-              <button id='captureButton' ref={CaptureRef} tabIndex={0} onClick={captureImage} className='inline-grid place-items-center focus:shadow-sm '><TbCapture /> Take Shot</button>
+              <button id='captureButton' ref={CaptureRef} tabIndex={0} onClick={captureImage} className='inline-grid place-items-center focus:shadow-sm'><TbCapture /> Take Shot</button>
               <button onClick={closeCamera}>Close</button>
             </div>
           </div>
@@ -172,7 +160,7 @@ const BoutonCamera: React.FC<BoutonCameraProps> = ({ setImage,onCameraStateChang
       )}
       <div {...getRootProps()} className='hidden'>
         <input {...getInputProps()} />
-        <div >
+        <div>
           {files.length > 0 && (
             <button onClick={() => startUpload(files)}>
               Upload {files.length} files

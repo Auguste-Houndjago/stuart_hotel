@@ -52,6 +52,7 @@ import { Separator } from "../ui/separator"
 import RoomCard from "../room/RoomCard"
 
 import LordIcon from '@Components/ui/LordIcon'
+import CountrySelector from "../ui/selector"
 
 
 
@@ -128,7 +129,13 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
   const router = useRouter()
   const { getAllCountries, getCountryStates, getStateCities } = useLocation()
 
+  //new add 26/08/24 countries selector
+  
   const countries = getAllCountries
+
+  const [isCountrySelectorOpen, setIsCountrySelectorOpen] = useState(false);
+
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -682,38 +689,32 @@ const AddHotelForm = ({ hotel }: AddHotelFormProps) => {
           </span>
           <div className="flex-1 flex flex-col gap-6 " >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6" >
-              <FormField
-                control={form.control}
-                name="country"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Select Country *</FormLabel>
-                    <FormDescription>In which country is Your propery located?</FormDescription>
+            <FormField
+  control={form.control}
+  name="country"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Select Country *</FormLabel>
+      <FormDescription>In which country is Your property located?</FormDescription>
 
-                    <Select disabled={isLoading}
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      defaultValue={field.value}
-                    >
+      <CountrySelector
+        id="country-selector"
+        open={isCountrySelectorOpen}
+        onToggle={() => setIsCountrySelectorOpen(!isCountrySelectorOpen)}
+        onChange={(isoCode) => {
+          field.onChange(isoCode);
+          setIsCountrySelectorOpen(false);
+        }}
+        selectedValue={{
+          name: countries.find(country => country.isoCode === field.value)?.name || 'Select a Country',
+          isoCode: field.value || ''
+        }}
+        disabled={isLoading}
+      />
 
-                      <SelectTrigger className=" bg-background">
-                        <SelectValue defaultValue={field.value} placeholder="Select a Country" />
-                      </SelectTrigger>
-
-                      <SelectContent>
-
-                        {countries.map((country) => {
-                          return <SelectItem key={country.isoCode} value={country.isoCode} > {country.name} </SelectItem>
-                        })}
-
-                      </SelectContent>
-                    </Select>
-
-                  </FormItem>
-
-                )}
-
-              />
+    </FormItem>
+  )}
+/>
 
               <FormField
                 control={form.control}
