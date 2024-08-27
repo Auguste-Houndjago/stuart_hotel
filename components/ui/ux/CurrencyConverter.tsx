@@ -45,7 +45,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ roomPrice }) => {
     <div onClick={isolateClic} >
       <form className="currency-form">
 
-        <select value={toCurrency} onChange={(e) => handleCurrencyChange(e, false)} className='rounded-md' >
+        <select value={toCurrency} onChange={(e) => handleCurrencyChange(e, false)} className='rounded-md bg-neutral-200 text-[14px]' >
           {Object.keys(countryList).map((currency_code) => (
             <option key={currency_code} value={currency_code}>
               {currency_code}
