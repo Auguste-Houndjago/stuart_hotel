@@ -46,7 +46,7 @@ function HotelDetailsClient({ hotel, bookings }: {hotel: HotelWithRooms, booking
           {hotel.shopping && <AmenityItem><ShoppingBasket className="w-4 h-4" />Shopping</AmenityItem>}
           {hotel.freeParking && <AmenityItem><Car className="w-4 h-4" />Shopping</AmenityItem>}
           {hotel.movieNights && <AmenityItem><Clapperboard className="w-4 h-4" />Shopping</AmenityItem>}
-          {hotel.coffeeShop && <AmenityItem><Wine className="w-4 h-4" />Shopping</AmenityItem>}
+          {hotel.coffeeShop && <AmenityItem><ShoppingBasket className="w-4 h-4" />Shopping</AmenityItem>}
         </div>
       </div>
       <div>

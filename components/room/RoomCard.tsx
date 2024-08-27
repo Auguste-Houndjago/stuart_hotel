@@ -381,7 +381,7 @@ function RoomCard({ hotel, room, bookings = [] }: RoomCardProps) {
               )}
               <div>
                 Total Price: <span className='font-bold'>{totalPrice} FCFA</span>{" "}
-                for <span className='font-bold'>${days} Days</span>
+                for <span className='font-bold'>{days} CFA /Days</span>
               </div>
               <Button
                 onClick={() => handleBookRoom()}

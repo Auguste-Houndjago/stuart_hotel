@@ -48,7 +48,7 @@ export default function RootLayout({
           >
             <Toaster/>
 
-            <main className="flex flex-col min-h-screen bg-gradient-to-b from-sky-100/10 to-sky-200 dark:bg-secondary dark:bg-none">
+            <main className="flex flex-col min-h-screen bg-gradient-to-b from-sky-100/10 to-sky-300 dark:bg-secondary dark:bg-none">
               <NavBar />
               <LocationFilter/>
               <section className="flex-grow" >

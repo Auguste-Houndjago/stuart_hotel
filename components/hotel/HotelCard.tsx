@@ -13,6 +13,7 @@ import { Button } from "../ui/button"
 import { FaSwimmer } from "react-icons/fa"
 import { useState } from "react"
 import Loader from "../ui/Loader"
+import CurrencyConverter from "../ui/ux/CurrencyConverter"
 
 function HotelCard({ hotel }: { hotel: HotelWithRooms }) {
 
@@ -45,7 +46,7 @@ function HotelCard({ hotel }: { hotel: HotelWithRooms }) {
             alt={hotel.title}
             className={cn(
               'w-full h-full object-cover',
-              imageLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'
+              imageLoading ? 'opacity-0' : ' opacity-100 transition-opacity duration-500'
             )}
             onLoadingComplete={() => setImageLoading(false)}
           />
@@ -77,9 +78,11 @@ function HotelCard({ hotel }: { hotel: HotelWithRooms }) {
               {hotel?.rooms[0]?.roomPrice && (
                 <>
                   <div className='font-semibold text-base'>
-                    ${hotel?.rooms[0].roomPrice}
+                    {hotel?.rooms[0].roomPrice} FCFA <span  className='text-xs'> / 24hrs </span>
+                    <span className="flex" ><CurrencyConverter roomPrice={hotel?.rooms[0].roomPrice} /> </span>
                   </div>
-                  <div className='text-xs'>/ 24hrs</div>
+                 
+        
                 </>
               )}
             </div>

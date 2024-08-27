@@ -1,3 +1,5 @@
+
+
 .spinner::after,
 .spinner::before {
   box-sizing: border-box;
@@ -10,12 +12,15 @@
   background: #005bba;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  animation: orbit 2s linear infinite, up 2s infinite;
+  animation: orbit 2s linear infinite, moveUp 2s infinite;
+ 
+  
 }
 
 .spinner::after {
   background: #fed500;
-  animation: orbit 2s linear infinite, down 2s infinite;
+  animation: orbit 2s linear infinite, moveDown 2s infinite;
+  
 }
 
 @keyframes orbit {
@@ -27,7 +32,7 @@
   }
 }
 
-@keyframes down {
+@keyframes moveDown {
   0%,
   100% {
     transform: none;
@@ -39,7 +44,6 @@
 
   50% {
     transform: translateX(100%) translateY(100%);
-    filter: blur(10px);
   }
 
   75% {
@@ -47,7 +51,7 @@
   }
 }
 
-@keyframes up {
+@keyframes moveUp {
   0%,
   100% {
     transform: none;
@@ -59,10 +63,10 @@
 
   50% {
     transform: translateX(-100%) translateY(-100%);
-    filter: blur(10px);
   }
 
   75% {
     transform: translateY(-100%);
   }
 }
+
