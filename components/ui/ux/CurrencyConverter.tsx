@@ -47,7 +47,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ roomPrice }) => {
 
         <select value={toCurrency} onChange={(e) => handleCurrencyChange(e, false)} className='rounded-md bg-neutral-200 text-[14px]' >
           {Object.keys(countryList).map((currency_code) => (
-            <option key={currency_code} value={currency_code}>
+            <option key={currency_code} className='w-5' value={currency_code}>
               {currency_code}
             </option>
           ))}
