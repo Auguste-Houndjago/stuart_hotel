@@ -53,8 +53,8 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ roomPrice }) => {
           ))}
         </select>
       </form>
-      <div className='font-semibold text-base'>
-         {convertedPrice} {toCurrency}  <span  className='text-xs text-neutral-500'> / 24hrs </span>
+      <div className='font-semibold text-sm'>
+         {convertedPrice} <span className='font-light '>{toCurrency} </span> <span  className='text-xs text-neutral-500'> / 24hrs </span>
       </div>
     </div>
   );
