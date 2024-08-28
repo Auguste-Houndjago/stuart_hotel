@@ -11,6 +11,7 @@ import { ICity, IState } from "country-state-city"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Button } from "./ui/button"
 
+
 function LocationFilter() {
   const [country, setCountry] = useState("")
   const [state, setState] = useState("")
@@ -154,6 +155,8 @@ function LocationFilter() {
         </div>
         <Button className="mr-2" onClick={()=> handleClear()} variant="outline">Clear </Button>
       </div>
+
+
     </Container>
   )
 }

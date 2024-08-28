@@ -1,5 +1,6 @@
 import { getHotels } from "@/actions/getHotels";
 import HotelList from "@/components/hotel/HotelList";
+import MobileButton from "@/components/ui/ux/MobileButton";
 
 interface HomeProps {
   searchParams: {
@@ -19,6 +20,7 @@ export default async function Home({searchParams}: HomeProps) {
   return (
     <div>      
       <HotelList hotels={hotels} />
+      <MobileButton />
     </div>
   );
 }

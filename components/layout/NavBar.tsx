@@ -9,6 +9,7 @@ import Image from 'next/image';
 import SearchInput from "../Searchinput";
 import { ModeToggle } from '../theme-toggle';
 import { NavMenu } from "./NavMenu";
+import { CardSpotlight } from '../ui/card-spotlight';
 
 
 
@@ -19,17 +20,18 @@ export default function NavBar() {
   const { userId } = useAuth();
 
   return (
-    <div className='sticky top-0 border border-b-primary/10 rounded-b-md bg-sky-500 dark:bg-secondary z-50'>
-
+    <div className='sticky top-0 border border-b-primary/10 rounded-b-md  dark:bg-secondary z-50'>
 
       <Container>
+
+      <CardSpotlight>
             <div className="flex justify-between ">
             <div className='flex items-center gap-1  cursor-pointer' onClick={()=> router.push('/')}>
           <Image src='/logo.svg' alt="logo" width='30' height='30' />
           <div className="font-bold hidden md:block text-xl " >Stuart_hotel</div>
         </div>
         <SearchInput />
-            <div className="flex gap-3 items-center" >
+            <div className="flex gap-3 items-center z-50" >
               <div> <ModeToggle /> 
                     <NavMenu />
               </div>
@@ -47,8 +49,9 @@ export default function NavBar() {
 
               </>}
             </div>
-
+          
             </div>
+            </CardSpotlight>
       </Container>
       <script src="https://cdn.lordicon.com/lordicon.js" async />
     </div>

@@ -6,17 +6,8 @@ import NavBar from "@/components/layout/NavBar";
 import { ThemeProvider } from "@/components/theme-provider"
 import Container from "@/components/Container";
 import { Toaster } from "@/components/ui/toaster"
-import { Toast } from "@/components/ui/toast";
-import { getHotelById } from "@/actions/getHotelById";
-import AddHotelForm from "@/components/hotel/AddHotelForm";
 import LocationFilter from "@/components/LocationFilter";
-
-
-
-
-
-
-
+import MobileButton from "@/components/ui/ux/MobileButton";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -46,20 +37,34 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+          
             <Toaster/>
 
-            <main className="flex flex-col min-h-screen bg-gradient-to-b from-sky-100/10 to-sky-300 dark:bg-secondary dark:bg-none">
+            <span className=" bg-[radial-gradient(circle_at_top_left,_#00000040,_transparent_50%),_radial-gradient(circle_at_bottom_right,_#00000040,_transparent_50%)] backdrop-blur-lg bg-opacity-30" >
+
+            <main className="flex flex-col min-h-screen bg-sky-300 ">
+
+       
+
+            <section className="flex-grow " >
+
               <NavBar />
               <LocationFilter/>
-              <section className="flex-grow" >
-                <Container>
-                    {children}
-                </Container>
-               
-              </section>
-
-
+        
+                  <Container>
+                      {children}
+                  </Container>
+                
+                </section>
+    
+                
+            
             </main>
+            </span>
+        
+            
+          
+          
           </ThemeProvider>
 
         </body>
