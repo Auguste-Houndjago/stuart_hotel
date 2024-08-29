@@ -111,6 +111,7 @@
 
 .navigation ul li:nth-child(2).active ~ .indicator {
 	transform: translatex(calc(0px * 1));
+	
 }
 
 .navigation ul li:nth-child(3).active ~ .indicator {
@@ -123,4 +124,5 @@
 
 .navigation ul li:nth-child(5).active ~ .indicator {
 	transform: translatex(calc(0px * 4));
+
 }
