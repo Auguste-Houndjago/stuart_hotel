@@ -8,6 +8,9 @@ import Container from "@/components/Container";
 import { Toaster } from "@/components/ui/toaster"
 import LocationFilter from "@/components/LocationFilter";
 import MobileButton from "@/components/ui/ux/MobileButton";
+import MobileNavBar from "@/components/ui/ux/MobileNavbar";
+import Navbar from "@/components/ui/ux/MobileNavbar";
+import MobileNavbar from "@/components/ui/ux/MobileNavbar";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -50,8 +53,12 @@ export default function RootLayout({
                   </Container>
                 
                 </section>
-      
+                <MobileNavbar/>
             </main>
+           
+
+           <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
           </ThemeProvider>
         </body>

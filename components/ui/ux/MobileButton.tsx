@@ -10,7 +10,7 @@ const MobileButton: React.FC = () => {
     const toggleOpen = () => setIsOpen(!isOpen);
 
     return (
-        <div className="fixed bottom-6 right-10 flex flex-col items-end md:hidden">
+        <div className="fixed bottom-[100px] right-8 flex flex-col items-end md:hidden">
             
                 <button 
                     onClick={() => router.push('/hotel/new')}
