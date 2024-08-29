@@ -55,7 +55,7 @@ function HotelCard({ hotel }: { hotel: HotelWithRooms }) {
         <div className='flex-1 flex flex-col justify-between h-[210px] gap-1 p-1 py-2 text-sm bg-inherit'>
           <div className='font-semibold text-xl'>{hotel.title.substring(0, 15)} </div>
           <div className='text-primary/90'>
-            {hotel.description.substring(0, 45)}...
+            {hotel.description.substring(0, 35)}...
           </div>
           <div className='text-primary/90'>
             <AmenityItem>
