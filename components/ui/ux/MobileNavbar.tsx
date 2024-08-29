@@ -31,7 +31,7 @@ const MobileNavbar = () => {
 
   return (
     <div className="w-full static flex justify-center items-center rounded-md ">
-      <div className="navigation border-t border-black w-full static flex justify-center items-center bg-white rounded-md">
+      <div className="navigation border-t border-black w-full static flex justify-center items-center bg-indigo-500 dark:bg-white rounded-md">
         <ul className="flex justify-center w-4/5 gap-x-4">
           {menuItems.map((item, index) => (
             <li
@@ -41,7 +41,7 @@ const MobileNavbar = () => {
             >
               <a href={item.link} className={`flex justify-center items-center w-full h-full text-gray-700 `}>
                 <span
-                  className={`icon flex justify-center items-center w-[55px] h-[55px] text-2xl rounded-full transition-transform duration-500 ${item.styles}`}
+                  className={`icon flex justify-center items-center w-[55px] h-[55px] text-2xl rounded-full transition-transform duration-500 `}
                   style={{
                     color: index === activeIndex ? item.color : '',
                   }}
@@ -51,7 +51,7 @@ const MobileNavbar = () => {
               </a>
             </li>
           ))}
-          <div className="indicator absolute top-[-35px] w-[70px] h-[70px] bg-white shadow-md rounded-full border-t border-yellow-400 z-10 transition-transform duration-500"></div>
+          <div className="indicator absolute top-[-35px] w-[70px] h-[70px] bg-indigo-500 dark:bg-white shadow-md rounded-full border-t border-yellow-400 z-10 transition-transform duration-500"></div>
         </ul>
       </div>
     </div>

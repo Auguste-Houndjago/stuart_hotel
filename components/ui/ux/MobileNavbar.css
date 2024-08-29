@@ -126,6 +126,3 @@
 	transform: translatex(calc(0px * 4));
 
 }
-.navigation ul li:nth-child(1).active{
-	background-color: chocolate;
-}
