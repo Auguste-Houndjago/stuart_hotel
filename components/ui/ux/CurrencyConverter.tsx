@@ -1,5 +1,13 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import countryList from './CountryList';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface CurrencyConverterProps {
   roomPrice: number;
@@ -29,35 +37,41 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ roomPrice }) => {
     fetchExchangeRate();
   }, [fromCurrency, toCurrency, roomPrice]);
 
-  const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>, isFromCurrency: boolean) => {
+  const handleCurrencyChange = (value: string, isFromCurrency: boolean) => {
     if (isFromCurrency) {
-      setFromCurrency(e.target.value);
+      setFromCurrency(value);
     } else {
-      setToCurrency(e.target.value);
+      setToCurrency(value);
     }
   };
 
-  const isolateClic =(e: React.MouseEvent<HTMLDivElement>)=>{
+  const isolateClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-  }
+  };
 
   return (
-    <div onClick={isolateClic} >
+    <div onClick={isolateClick}>
       <form className="currency-form">
-
-        <select value={toCurrency} onChange={(e) => handleCurrencyChange(e, false)} className='rounded-md bg-neutral-200 text-[14px]' >
-          {Object.keys(countryList).map((currency_code) => (
-            <option key={currency_code} className='w-5 h-2/4' value={currency_code}>
-              {currency_code}
-            </option>
-          ))}
-        </select>
+        <Select value={toCurrency} onValueChange={(value) => handleCurrencyChange(value, false)} >
+          <SelectTrigger className="max-w-20 h-4 border-none ">
+            <SelectValue placeholder="convert currency" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.keys(countryList).map((currency_code) => (
+              <SelectItem key={currency_code} value={currency_code}>
+                {currency_code}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </form>
       <div className='font-semibold text-sm'>
-         {convertedPrice} <span className='font-light '>{toCurrency} </span> <span  className='text-xs text-neutral-500'> / 24hrs </span>
+        {convertedPrice} <span className='font-light'>{toCurrency}</span> <span className='text-xs text-neutral-500'>/ 24hrs</span>
       </div>
     </div>
   );
 };
 
 export default CurrencyConverter;
+
+

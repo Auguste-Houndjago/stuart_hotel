@@ -39,13 +39,7 @@ export default function RootLayout({
           >
           
             <Toaster/>
-
-            <span className=" bg-[radial-gradient(circle_at_top_left,_#00000040,_transparent_50%),_radial-gradient(circle_at_bottom_right,_#00000040,_transparent_50%)] backdrop-blur-lg bg-opacity-30" >
-
-            <main className="flex flex-col min-h-screen bg-sky-300 ">
-
-       
-
+            <main className="flex flex-col min-h-screen bg-sky-300 dark:bg-secondary ">
             <section className="flex-grow " >
 
               <NavBar />
@@ -56,17 +50,10 @@ export default function RootLayout({
                   </Container>
                 
                 </section>
-    
-                
-            
+      
             </main>
-            </span>
-        
-            
-          
-          
-          </ThemeProvider>
 
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
