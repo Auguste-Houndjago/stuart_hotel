@@ -110,7 +110,7 @@ function LocationFilter() {
             </SelectTrigger>
             <SelectContent>
               {countries.map((country)=> {
-                return <SelectItem key={country.isoCode} value={country.isoCode}>
+                return <SelectItem className="hover:bg-slate-200/80 text-center px-2 rounded-sm cursor-pointer" key={country.isoCode} value={country.isoCode}>
                   {country.name}
                 </SelectItem>
               })}
@@ -128,7 +128,7 @@ function LocationFilter() {
             </SelectTrigger>
             <SelectContent>
               {state.length > 0 && states.map((state)=> {
-                return <SelectItem key={state.isoCode} value={state.isoCode}>
+                return <SelectItem className="hover:bg-slate-200/80 text-center px-2 rounded-sm cursor-pointer" key={state.isoCode} value={state.isoCode}>
                   {state.name}
                 </SelectItem>
               })}
@@ -146,7 +146,7 @@ function LocationFilter() {
             </SelectTrigger>
             <SelectContent>
               {cities.length > 0 && cities.map((city)=> {
-                return <SelectItem key={city.name} value={city.name}>
+                return <SelectItem className="hover:bg-slate-200/80 text-center px-2 rounded-sm cursor-pointer" key={city.name} value={city.name}>
                   {city.name}
                 </SelectItem>
               })}

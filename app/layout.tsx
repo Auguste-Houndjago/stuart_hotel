@@ -53,7 +53,8 @@ export default function RootLayout({
                   </Container>
                 
                 </section>
-                <MobileNavbar/>
+                <span className="flex md:hidden"><MobileNavbar/></span>
+                
             </main>
            
 
