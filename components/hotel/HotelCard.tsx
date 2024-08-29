@@ -48,12 +48,12 @@ function HotelCard({ hotel }: { hotel: HotelWithRooms }) {
               'w-full h-full object-cover',
               imageLoading ? 'opacity-0' : ' opacity-100 transition-opacity duration-500'
             )}
-            onLoadingComplete={() => setImageLoading(false)}
+            onLoad={()=> setImageLoading(false)}
           />
         </div>
 
-        <div className='flex-1 flex flex-col justify-between h-[210px] gap-1 p-1 py-2 text-sm'>
-          <div className='font-semibold text-xl'>{hotel.title}</div>
+        <div className='flex-1 flex flex-col justify-between h-[210px] gap-1 p-1 py-2 text-sm bg-inherit'>
+          <div className='font-semibold text-xl'>{hotel.title.substring(0, 15)} </div>
           <div className='text-primary/90'>
             {hotel.description.substring(0, 45)}...
           </div>

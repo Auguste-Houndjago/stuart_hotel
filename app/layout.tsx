@@ -42,7 +42,7 @@ export default function RootLayout({
           >
           
             <Toaster/>
-            <main className="flex flex-col min-h-screen bg-sky-300 dark:bg-secondary ">
+            <main className="flex svg flex-col min-h-screen bg-sky-300 dark:bg-secondary ">
             <section className="flex-grow " >
 
               <NavBar />
@@ -53,7 +53,7 @@ export default function RootLayout({
                   </Container>
                 
                 </section>
-                <span className="flex md:hidden"><MobileNavbar/></span>
+                <span className="inline static md:hidden"><MobileNavbar/></span>
                 
             </main>
            

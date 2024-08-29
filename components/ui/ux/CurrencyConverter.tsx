@@ -53,7 +53,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ roomPrice }) => {
     <div onClick={isolateClick}>
       <form className="currency-form">
         <Select value={toCurrency} onValueChange={(value) => handleCurrencyChange(value, false)} >
-          <SelectTrigger className="max-w-20 h-4 border-none ">
+          <SelectTrigger className="max-w-20 h-2 border-none ">
             <SelectValue placeholder="convert currency" />
           </SelectTrigger>
           <SelectContent>
