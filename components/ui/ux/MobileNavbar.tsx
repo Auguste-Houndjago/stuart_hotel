@@ -51,7 +51,7 @@ const MobileNavbar = () => {
               </a>
             </li>
           ))}
-          <div className="indicator absolute top-[-35px] w-[70px] h-[70px] bg-indigo-500 dark:bg-white shadow-md rounded-full border-t border-yellow-400 z-10 transition-transform duration-500"></div>
+          <div className="indicator absolute -top-7 w-14 h-14 bg-indigo-500 dark:bg-white shadow-md rounded-full border-t border-yellow-400 z-50 transition-transform duration-500"></div>
         </ul>
       </div>
     </div>
