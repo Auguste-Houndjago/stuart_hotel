@@ -7,9 +7,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import Container from "@/components/Container";
 import { Toaster } from "@/components/ui/toaster"
 import LocationFilter from "@/components/LocationFilter";
-import MobileButton from "@/components/ui/ux/MobileButton";
-import MobileNavBar from "@/components/ui/ux/MobileNavbar";
-import Navbar from "@/components/ui/ux/MobileNavbar";
 import MobileNavbar from "@/components/ui/ux/MobileNavbar";
 
 
@@ -56,10 +53,6 @@ export default function RootLayout({
                 <span className="inline static md:hidden"><MobileNavbar/></span>
                 
             </main>
-           
-
-           <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
           </ThemeProvider>
         </body>
