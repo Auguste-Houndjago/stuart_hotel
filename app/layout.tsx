@@ -53,6 +53,10 @@ export default function RootLayout({
                 <span className="inline static md:hidden"><MobileNavbar/></span>
                 
             </main>
+           
+
+           <script type="module" async src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script async  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
           </ThemeProvider>
         </body>

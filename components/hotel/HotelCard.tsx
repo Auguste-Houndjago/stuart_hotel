@@ -77,7 +77,7 @@ function HotelCard({ hotel }: { hotel: HotelWithRooms }) {
             <div className='flex items-center gap-1'>
               {hotel?.rooms[0]?.roomPrice && (
                 <>
-                  <div className='font-semibold text-base'>
+                  <div className='font-semibold text-[14px] text-ellipsis md:text-base '>
                     {hotel?.rooms[0].roomPrice} FCFA <span  className='text-xs'> / 24hrs </span>
                     <span className="flex" ><CurrencyConverter roomPrice={hotel?.rooms[0].roomPrice} /> </span>
                   </div>

@@ -30,8 +30,8 @@ const MobileNavbar = () => {
   ];
 
   return (
-
-      <div className="navigation w-full static flex  justify-center items-center bg-white rounded-md">
+    <div className="w-full static flex justify-center items-center rounded-md ">
+      <div className="navigation w-full static flex justify-center items-center bg-white rounded-md">
         <ul className="flex justify-center w-4/5 gap-x-4">
           {menuItems.map((item, index) => (
             <li
@@ -54,6 +54,7 @@ const MobileNavbar = () => {
           <div className="indicator absolute top-[-35px] w-[70px] h-[70px] bg-white rounded-full z-10 transition-transform duration-500"></div>
         </ul>
       </div>
+    </div>
   );
 };
 
