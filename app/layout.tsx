@@ -10,6 +10,7 @@ import LocationFilter from "@/components/LocationFilter";
 import MobileNavbar from "@/components/ui/ux/MobileNavbar";
 
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -50,7 +51,8 @@ export default function RootLayout({
                   </Container>
                 
                 </section>
-                <span className="inline static md:hidden"><MobileNavbar/></span>
+
+                <span className="inline static md:hidden"><MobileNavbar/> </span>
                 
             </main>
            
