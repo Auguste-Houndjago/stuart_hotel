@@ -21,6 +21,7 @@ const MobileNavbar = ({ onCustomClick }: { onCustomClick?: () => void }) => {
     }
   }, [activeIndex]);
 
+
   return (
     <div className="w-full flex justify-center items-center rounded-md">
       <div className="navigation border-t border-black w-full h-auto flex justify-center items-center bg-white dark:bg-white rounded-md">
@@ -91,7 +92,7 @@ const MobileNavbar = ({ onCustomClick }: { onCustomClick?: () => void }) => {
               </span>
             </a>
           </li>
-          <div className="indicator absolute left-0 -top-7 w-14 h-14 bg-indigo-500 dark:bg-white shadow-md rounded-full border-t border-yellow-400 z-50 transition-transform duration-500"></div>
+          <div className="indicator absolute left-0 -top-7 w-14 min-w-14 h-14 min-h-14 bg-indigo-500 dark:bg-white shadow-md rounded-full border-t border-yellow-400 z-50 transition-transform duration-500"></div>
         </ul>
       </div>
     </div>
