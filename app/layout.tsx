@@ -55,7 +55,7 @@ export default function RootLayout({
                 
             </main>
            
-            <span className="flex md:hidden w-full max-h-20 absolute bottom-0 "><MobileNavbar/> </span>
+            <span className="flex md:hidden w-full max-h-20 static bottom-0 "><MobileNavbar/> </span>
 
            <script type="module" async src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script async  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
