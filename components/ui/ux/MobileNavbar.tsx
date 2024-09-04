@@ -92,7 +92,7 @@ const MobileNavbar = ({ onCustomClick }: { onCustomClick?: () => void }) => {
               </span>
             </a>
           </li>
-          <div className="indicator absolut -top-7 w-14 min-w-12 h-14 min-h-12 bg-indigo-500 dark:bg-white shadow-md rounded-full border-t border-yellow-400 z-50 transition-transform duration-500"></div>
+          <div className="indicator absolut -top-7 w-14 min-w-12 h-14 min-h-8 bg-indigo-500 dark:bg-white shadow-md rounded-full border-t border-yellow-400 z-50 transition-transform duration-500"></div>
         </ul>
       </div>
     </div>
