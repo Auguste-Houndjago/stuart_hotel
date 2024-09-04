@@ -23,7 +23,8 @@ const MobileNavbar = ({ onCustomClick }: { onCustomClick?: () => void }) => {
 
   return (
     <div className="w-full flex justify-center items-center rounded-md">
-      <div className="navigation border-t border-black w-full flex justify-center items-center bg-indigo-500 dark:bg-white rounded-md">
+      <div className="navigation border-t border-black w-full h-auto flex justify-center items-center bg-white dark:bg-white rounded-md">
+        {/* div de la barre d'icons */}
         <ul className="flex justify-center w-4/5 gap-x-4">
           <li
             className={`list ${activeIndex === 0 ? 'active' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
@@ -39,7 +40,7 @@ const MobileNavbar = ({ onCustomClick }: { onCustomClick?: () => void }) => {
             </a>
           </li>
           <li
-            className={`list ${activeIndex === 1 ? 'active opacity-50' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
+            className={`list ${activeIndex === 1 ? 'active' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
             onClick={() => handleItemClick(1)}
           >
             <a href="#" className={`flex justify-center items-center w-full text-gray-700`}>
@@ -52,7 +53,7 @@ const MobileNavbar = ({ onCustomClick }: { onCustomClick?: () => void }) => {
             </a>
           </li>
           <li
-            className={`list ${activeIndex === 2 ? 'active opacity-50' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
+            className={`list ${activeIndex === 2 ? 'active' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
             onClick={() => handleItemClick(2)}
           >
             <a href="#" className={`flex justify-center items-center w-full text-gray-700`}>
@@ -65,7 +66,7 @@ const MobileNavbar = ({ onCustomClick }: { onCustomClick?: () => void }) => {
             </a>
           </li>
           <li
-            className={`list ${activeIndex === 3 ? 'active opacity-50 bg-neutral-100' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
+            className={`list ${activeIndex === 3 ? 'active' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
             onClick={() => handleItemClick(3)}
           >
             <a href="#" className={`flex justify-center items-center w-full text-gray-700`}>
@@ -78,7 +79,7 @@ const MobileNavbar = ({ onCustomClick }: { onCustomClick?: () => void }) => {
             </a>
           </li>
           <li
-            className={`list ${activeIndex === 4 ? 'active opacity-50' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
+            className={`list ${activeIndex === 4 ? 'active' : ''} flex justify-center items-center relative w-[70px] h-[60px] z-20`}
             onClick={() => handleItemClick(4)}
           >
             <a href="#" className={`flex justify-center items-center w-full text-gray-700`}>
