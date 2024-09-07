@@ -32,7 +32,7 @@ if (!self.define) {
           } else {
             nextDefineUri = uri;
             importScripts(uri);
-            resolve(); 
+            resolve();
           }
         })
       

@@ -1,0 +1,12 @@
+{
+    "routes": [
+      {
+        "src": "^/sw.js$",
+        "dest": "/_next/static/sw.js",
+        "headers": {
+          "cache-control": "public, max-age=43200, immutable",
+          "Service-Worker-Allowed": "/"
+        }
+      }
+    ]
+  }
