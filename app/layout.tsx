@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   manifest:"/manifest.json",
   title: "infinite_hotel",
   description: "trouver la chambre qui vous convient",
-  icons: { icon: '/Logo_md.png' }
+  icons: { icon: '/Logo.png' }
 };
 
 export const viewport: Viewport = {
