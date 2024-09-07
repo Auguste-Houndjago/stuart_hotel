@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -14,11 +14,15 @@ import MobileNavbar from "@/components/ui/ux/MobileNavbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Stuart-hotel",
-  description: "trouver l'hotel qui vous convient",
-  icons: { icon: '/logo.svg' }
+  manifest:"/manifest.json",
+  title: "infinite_hotel",
+  description: "trouver la chambre qui vous convient",
+  icons: { icon: '/Logo_md.png' }
 };
 
+export const viewport: Viewport = {
+  themeColor: "#FFFFFF",
+};
 
 export default function RootLayout({
   children,
