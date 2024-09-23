@@ -23,7 +23,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({ roomPrice }) => {
     const fetchExchangeRate = async () => {
       try {
         const response = await fetch(
-          `https://v6.exchangerate-api.com/v6/e3ba77f22c3942f67154b0be/latest/${fromCurrency}`
+          `https://v6.exchangerate-api.com/v6/aee815df497749f6afd149d7/latest/${fromCurrency}`
         );
         const result = await response.json();
         const rate = result.conversion_rates[toCurrency];
